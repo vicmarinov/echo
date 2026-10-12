@@ -1,0 +1,12 @@
+:root {
+    --primary-color: #1D1D1D;
+    --secondary-color: #FFFFFF;
+
+    --accent-color: #5C00A2;
+    --danger-color: #A62116;
+
+    --main-background: #F2F2F2;
+    --card-background: #FFFFFF;
+
+    --shadow: 0 0 10px 0 color-mix(var(--primary-color) 10%, transparent);
+}

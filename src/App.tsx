@@ -1,5 +1,12 @@
+import Header from './components/header/Header.tsx';
+
 export default function App () {
     return (
-        <p>Hello, world!</p>
+        <>
+            <Header />
+            <main>
+                <p>Hello, world!</p>
+            </main>
+        </>
     );
 }
