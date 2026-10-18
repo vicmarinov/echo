@@ -1,19 +1,25 @@
+import { Link, NavLink } from 'react-router';
 import styles from './Header.module.css';
 
 export default function Header () {
+    const navLinkClassName = ({ isActive }: { isActive: boolean }): string => {
+        return [
+            styles.link,
+            isActive ? styles.active : ''
+        ].join(' ').trim();
+    }
+    
     return (
         <header className={styles.header}>
-            {/* TODO: Update the hypertext reference of the anchor tag */}
-            <a href="#">
+            <Link to='/'>
                 <img src="/logo.svg" alt="Logo" className={styles.logo} />
-            </a>
+            </Link>
             <nav className={styles.navigation}>
                 <ol className={styles.list}>
-                    {/* TODO: Update the hypertext references of the anchor tags */}
-                    <li><a href="#" className={styles.link}>Posts</a></li>
-                    <li><a href="#" className={styles.link}>About</a></li>
-                    <li><a href="#" className={styles.link}>Log in</a></li>
-                    <li><a href="#" className={styles.link}>Sign up</a></li>
+                    <li><NavLink to="/posts" className={navLinkClassName}>Posts</NavLink></li>
+                    <li><NavLink to="/about" className={navLinkClassName}>About</NavLink></li>
+                    <li><NavLink to="/login" className={navLinkClassName}>Log in</NavLink></li>
+                    <li><NavLink to="/signup" className={navLinkClassName}>Sign up</NavLink></li>
                 </ol>
             </nav>
         </header>

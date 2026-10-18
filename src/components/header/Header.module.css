@@ -43,6 +43,10 @@
     text-underline-offset: 6px;
 }
 
+.header .navigation .list .link.active {
+    font-weight: bold;
+}
+
 @media (width <= 1150px) {
     .header .logo {
         height: 1.25rem;
