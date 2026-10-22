@@ -18,8 +18,8 @@ export default function Header () {
                 <ol className={styles.list}>
                     <li><NavLink to="/posts" className={navLinkClassName}>Posts</NavLink></li>
                     <li><NavLink to="/about" className={navLinkClassName}>About</NavLink></li>
-                    <li><NavLink to="/login" className={navLinkClassName}>Log in</NavLink></li>
-                    <li><NavLink to="/signup" className={navLinkClassName}>Sign up</NavLink></li>
+                    <li><NavLink to="/auth/login" className={navLinkClassName}>Log in</NavLink></li>
+                    <li><NavLink to="/auth/signup" className={navLinkClassName}>Sign up</NavLink></li>
                 </ol>
             </nav>
         </header>
