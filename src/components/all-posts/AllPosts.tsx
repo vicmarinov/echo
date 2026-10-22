@@ -5,7 +5,7 @@ import Post from '../post/Post.tsx';
 import styles from './AllPosts.module.css';
 
 export default function AllPosts () {
-    const [posts, setPosts] = useState<PostData[]>([]);
+    const [posts, setPosts] = useState<PostData[] | null>(null);
 
     useEffect(() => {
         // TODO: Add error handling
@@ -16,14 +16,20 @@ export default function AllPosts () {
     
     return (
         <main className={styles['all-posts']}>
-            <h1>All Posts</h1>
-            {posts.length
+            {
+                posts === null
                 ? (
+                    <p className={styles.message}>Loading posts...</p>
+                )
+                : posts.length === 0
+                ? (
+                    <p className={styles.message}>There are no posts yet... <i className={styles.emoji}>😭</i></p>
+                )
+                : (
                     <div className={styles.list}>
                         {posts.map(data => <Post key={data.id} {...data} />)}
                     </div>
-                )
-                : <p className={styles['no-posts']}>There are no posts yet... <i className={styles.emoji}>😭</i></p>
+                ) 
             }
         </main>
     );
