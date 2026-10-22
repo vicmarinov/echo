@@ -9,9 +9,13 @@ export default function AllPosts () {
 
     useEffect(() => {
         // TODO: Add error handling
-        // TODO: Add AbortController
-        postService.getAll()
+
+        const abortController = new AbortController();
+
+        postService.getAll(abortController)
             .then(data => data && setPosts(data));
+        
+        return () => abortController.abort();
     }, []);
     
     return (
