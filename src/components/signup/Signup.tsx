@@ -14,7 +14,8 @@ export default function Signup () {
         isMinAge: false,
         agreeTerms: false,
         region: '',
-        gender: ''
+        gender: '',
+        age: '0'
     });
 
     const [formDirtyFields, setFormDirtyFields] = useState({
@@ -29,6 +30,7 @@ export default function Signup () {
         agreeTerms: false,
         region: false,
         gender: false,
+        age: false
     });
 
     const [formStatus, setFormStatus] = useState('idle');
@@ -108,6 +110,9 @@ export default function Signup () {
                 <label htmlFor="genderF">Female</label>
                 <input type="radio" id="genderO" name="gender" value="other" checked={formData.gender === 'other'} onChange={formChangeHandler} onBlur={formBlurHandler} />
                 <label htmlFor="genderO">Other</label>
+
+                <label htmlFor="age">Age</label>
+                <input type="number" id="age" name="age" value={formData.age} onChange={formChangeHandler} onBlur={formBlurHandler} />
 
                 <button type="submit" disabled={formStatus === 'submitting'}>
                     {formStatus === 'submitting' ? 'Signing Up...' : 'Sign Up'}
