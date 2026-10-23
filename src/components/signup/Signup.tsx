@@ -1,9 +1,12 @@
 import { useState, type ChangeEvent, type SubmitEvent, type FocusEvent } from 'react';
 
-// import './temp.css';
+// import zod from 'zod';
+
+import './temp.css';
+// import type { ZodSchema } from 'zod/v3';
 
 export default function Signup () {
-    const [formData, setData] = useState({
+    const [formData, setFormData] = useState({
         name: '',
         surname: '',
         username: '',
@@ -15,7 +18,7 @@ export default function Signup () {
         agreeTerms: false,
         region: '',
         gender: '',
-        age: '0'
+        age: 0
     });
 
     const [formDirtyFields, setFormDirtyFields] = useState({
@@ -33,23 +36,68 @@ export default function Signup () {
         age: false
     });
 
+    const [formErrors, setFormErrors] = useState<{[name: string]: string[]}>({
+        name: [],
+        surname: [],
+        username: [],
+        bio: [],
+        email: [],
+        password: [],
+        repeatPassword: [],
+        isMinAge: [],
+        agreeTerms: [],
+        region: [],
+        gender: [],
+        age: []
+    });
+
     const [formStatus, setFormStatus] = useState('idle');
 
     const formChangeHandler = (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-        setData(formData => ({
+        setFormData(formData => ({
             ...formData,
-            [event.target.name]: event.target instanceof HTMLInputElement && event.target.type === 'checkbox' ? event.target.checked : event.target.value
+            [event.target.name]:
+                event.target instanceof HTMLInputElement && event.target.type === 'checkbox'
+                    ? event.target.checked
+                    : event.target.type === 'number'
+                    ? Number(event.target.value)
+                    : event.target.value
         }));
     }
 
-    const formSubmitHandler = (event: SubmitEvent<HTMLFormElement>) => {
+    const formSubmitHandler = async (event: SubmitEvent<HTMLFormElement>) => {
         event.preventDefault();
+
+        if (formStatus === 'invalid') {
+            return;
+        }
+
+        const isValid = formValidator(formData);
+        if (!isValid) {
+            setFormStatus('invalid');
+            setFormDirtyFields({
+                name: true, surname: true, username: true, bio: true,
+                email: true, password: true, repeatPassword: true,
+                isMinAge: true, agreeTerms: true, region: true,
+                gender: true, age: true
+            });
+            return;
+        }
 
         setFormStatus('submitting');
 
-        (function () {
-            console.log(['Simulating calling API with:', JSON.stringify(formData, null, 4)].join('\n'));
-        })();
+        const requestResult = await (
+            new Promise((resolve, reject) => {
+                setTimeout(() => {
+                    resolve([
+                        'Simulating calling API with:',
+                        JSON.stringify(formData, null, 4)
+                    ].join('\n'));
+                }, 5000);
+            })
+        )
+
+        console.log(requestResult);
 
         setFormStatus('submitted');
     }
@@ -59,6 +107,35 @@ export default function Signup () {
             ...fieldsState,
             [event.target.name]: true
         }));
+
+        const isValid = formValidator(formData);
+        if (!isValid) setFormStatus('invalid');
+        else setFormStatus('valid');
+    }
+
+    const formValidator = (formData: any) => {
+        console.log('Simulating form validation');
+
+        const nameErrors: string[] = [];
+        const surnameErrors: string[] = [];
+
+        if (formData.name.startsWith('a')) {
+            nameErrors.push('Name can`t start with a.');
+            nameErrors.push('Name is invalid.');
+        }
+
+        if (formData.surname.startsWith('b')) {
+            surnameErrors.push('Surname can`t start with b.');
+            surnameErrors.push('Surname is invalid.');
+        }
+
+        setFormErrors(fe => ({
+            ...fe,
+            name: nameErrors,
+            surname: surnameErrors
+        }));
+        
+        return nameErrors.length === 0 && surnameErrors.length === 0;
     }
 
     return (
@@ -68,9 +145,11 @@ export default function Signup () {
             <form onSubmit={formSubmitHandler}>
                 <label htmlFor="name">Name</label>
                 <input type="text" id="name" name="name" value={formData.name} onChange={formChangeHandler} onBlur={formBlurHandler} />
+                <p>{formDirtyFields.name && formErrors.name.length > 0 && formErrors.name.join(' ')}</p>
 
                 <label htmlFor="surname">Surname</label>
                 <input type="text" id="surname" name="surname" value={formData.surname} onChange={formChangeHandler} onBlur={formBlurHandler} />
+                <p>{formDirtyFields.surname && formErrors.surname.length > 0 && formErrors.surname.join(' ')}</p>
 
                 <label htmlFor="username">Username</label>
                 <input type="text" id="username" name="username" value={formData.username} onChange={formChangeHandler} onBlur={formBlurHandler} />
