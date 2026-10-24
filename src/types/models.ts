@@ -7,6 +7,7 @@ export namespace User {
     };
     
     export type SignupData = Credentials & Omit<Profile.AddData, 'user_id'>
+    export type LoginData = Credentials;
 }
 
 export namespace Profile {

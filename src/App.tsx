@@ -2,6 +2,7 @@ import { Navigate, Route, Routes } from 'react-router';
 import AllPosts from './components/all-posts/AllPosts.tsx';
 import Header from './components/header/Header.tsx';
 import Signup from './components/auth/signup/Signup.tsx';
+import Login from './components/auth/login/Login.tsx';
 
 export default function App () {
     return (
@@ -14,8 +15,11 @@ export default function App () {
                 
                 {/* TODO: Implement the following routes and their corresponding components */}
                 <Route path='/about' element={<p>About: To be implemented...</p>} />
-                <Route path='/auth/login' element={<p>Log In: To be implemented...</p>} />
-                <Route path='/auth/signup' element={<Signup />} />
+
+                <Route path='/auth'>
+                    <Route path='login' element={<Login />} />
+                    <Route path='signup' element={<Signup />} />
+                </Route>
             </Routes>
         </>
     );
