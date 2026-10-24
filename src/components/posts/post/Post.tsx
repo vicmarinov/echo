@@ -1,7 +1,7 @@
-import type { PostData } from '../../types/models.ts';
+import type { Post } from '../../../types/models.ts';
 import styles from './Post.module.css';
 
-export default function Post (data: PostData) {
+export default function Post (data: Post.Data) {
     return (
         <article className={styles.post}>{data.text}</article>
     );

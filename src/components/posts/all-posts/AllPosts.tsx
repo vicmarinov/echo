@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
-import postService from '../../services/post-service.ts';
-import type { Post as PostTypes } from '../../types/models.ts';
+import postService from '../../../services/post-service.ts';
+import type { Post as PostTypes } from '../../../types/models.ts';
 import Post from '../post/Post.tsx';
 import styles from './AllPosts.module.css';
 

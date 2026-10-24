@@ -1,5 +1,5 @@
 import { Navigate, Route, Routes } from 'react-router';
-import AllPosts from './components/all-posts/AllPosts.tsx';
+import AllPosts from './components/posts/all-posts/AllPosts.tsx';
 import Header from './components/header/Header.tsx';
 import Signup from './components/auth/signup/Signup.tsx';
 import Login from './components/auth/login/Login.tsx';
