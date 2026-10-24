@@ -1,8 +1,8 @@
 import { Link, useNavigate } from 'react-router';
-import useControlledForm from '../../hooks/use-controlled-form.ts';
+import useControlledForm from '../../../hooks/use-controlled-form.ts';
 import signupSchema from './Signup.schema.ts';
-import authService from '../../services/auth-service.ts';
-import styles from './Signup.module.css';
+import authService from '../../../services/auth-service.ts';
+import styles from './../auth.module.css';
 
 export default function Signup () {
     const navigate = useNavigate();
@@ -20,7 +20,7 @@ export default function Signup () {
     });
     
     return (
-        <main className={styles.signup}>
+        <main className={styles.auth}>
             <form className={styles.form} {...formProps}>
                 <h1 className={styles.heading}>Sign Up</h1>
 

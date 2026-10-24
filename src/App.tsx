@@ -1,7 +1,7 @@
 import { Navigate, Route, Routes } from 'react-router';
 import AllPosts from './components/all-posts/AllPosts.tsx';
 import Header from './components/header/Header.tsx';
-import Signup from './components/signup/Signup.tsx';
+import Signup from './components/auth/signup/Signup.tsx';
 
 export default function App () {
     return (

@@ -1,4 +1,4 @@
-.signup {
+.auth {
     flex: 1 1 auto;
 
     display: flex;
@@ -8,7 +8,7 @@
     padding: 50px 40px;
 }
 
-.signup .form {
+.auth .form {
     width: 100%;
     max-width: 550px;
 
@@ -18,20 +18,20 @@
     padding: 40px;
 }
 
-.signup .form .heading {
+.auth .form .heading {
     margin: 0;
     padding: 1rem 0;
 }
 
-.signup .form .field {
+.auth .form .field {
     padding: 0.5rem 0;
 }
 
-.signup .form .field:has(> input[type="checkbox"]) {
+.auth .form .field:has(> input[type="checkbox"]) {
     padding: 0;
 }
 
-.signup .form .field .input:not(input[type="checkbox"]) {
+.auth .form .field .input:not(input[type="checkbox"]) {
     display: block;
     width: 100%;
     padding: 0.5rem;
@@ -40,33 +40,33 @@
     border-radius: 0.5rem;
 }
 
-.signup .form .field .input:is(input[type="checkbox"]) {
+.auth .form .field .input:is(input[type="checkbox"]) {
     margin-right: 0.5rem;
 }
 
-.signup .form .field .error-message {
+.auth .form .field .error-message {
     padding: 0.25rem 0 0;
     margin: 0;
 
     font-size: 0.9rem;
 }
 
-.signup .form .field:has(> .error-message) {
+.auth .form .field:has(> .error-message) {
     color: var(--danger-color);
 }
 
-.signup .form .field:has(> .error-message) .input:not(input[type="checkbox"]) {
+.auth .form .field:has(> .error-message) .input:not(input[type="checkbox"]) {
     border-color: var(--danger-color);
 }
 
-.signup .form .controls {
+.auth .form .controls {
     display: flex;
     align-items: center;
     gap: 1.5rem;
     padding: 1rem 0;
 }
 
-.signup .form .controls .submit {
+.auth .form .controls .submit {
     background: var(--accent-color);
     color: var(--secondary-color);
     border: none;
@@ -74,19 +74,19 @@
     padding: 0.5rem 2.5rem;
 }
 
-.signup .form .controls .submit:hover {
+.auth .form .controls .submit:hover {
     scale: 1.05;
     transition: 300ms;
 }
 
 @media (width <= 800px) {
-    .signup {
+    .auth {
         padding-bottom: 110px;
     }
 }
 
 @media (width <= 550px) {
-    .signup .form .controls {
+    .auth .form .controls {
         flex-flow: column;
         gap: 1rem;
     }

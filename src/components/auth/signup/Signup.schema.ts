@@ -1,4 +1,4 @@
-import type { FormSchema } from '../../types/use-controlled-form.types.ts';
+import type { FormSchema } from '../../../types/use-controlled-form.types.ts';
 import * as zod from '@zod/mini';
 
 const signupSchema = {
