@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
 import postService from '../../services/post-service.ts';
-import type { PostData } from '../../types/models.ts';
+import type { Post as PostTypes } from '../../types/models.ts';
 import Post from '../post/Post.tsx';
 import styles from './AllPosts.module.css';
 
 export default function AllPosts () {
-    const [posts, setPosts] = useState<PostData[] | null>(null);
+    const [posts, setPosts] = useState<PostTypes.Data[] | null>(null);
 
     useEffect(() => {
         // TODO: Add error handling

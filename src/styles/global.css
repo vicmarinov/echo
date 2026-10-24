@@ -23,6 +23,16 @@ body {
     display: flex;
 }
 
+a {
+    text-decoration: none;
+    color: var(--accent-color);
+}
+
+a:hover {
+    text-decoration: underline;
+    text-underline-offset: 6px;
+}
+
 @media (width <= 800px) {
     #root {
         display: block;

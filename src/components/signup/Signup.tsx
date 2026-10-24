@@ -1,138 +1,88 @@
+import { Link, useNavigate } from 'react-router';
 import useControlledForm from '../../hooks/use-controlled-form.ts';
-import type { FormSchema } from '../../types/use-controlled-form.types.ts';
-
-// import './temp.css';
-
-const schema = {
-    name: {
-        type: 'text',
-        initialValue: '',
-        validator (name) {
-            const errors: string[] = [];
-            if (!name) errors.push('Name is required.');
-            if (name.length < 3) errors.push('Name must be at least 3 characters long.');
-            return errors;
-        }
-    },
-    surname: {
-        type: 'text',
-        initialValue: '',
-        validator (surname) {
-            const errors: string[] = [];
-            if (!surname) errors.push('Surname is required.');
-            if (surname.length < 3) errors.push('Surname must be at least 3 characters long.');
-            return errors;
-        }
-    },
-    username: { type: 'text', initialValue: '' },
-    bio: { type: 'textarea', initialValue: '' },
-    email: { type: 'email', initialValue: '' },
-    password: { type: 'password', initialValue: '' },
-    repeatPassword: { type: 'password', initialValue: '' },
-    isMinAge: { type: 'checkbox', initialValue: false },
-    agreeTerms: { type: 'checkbox', initialValue: false },
-    region: { type: 'select', initialValue: '' },
-    gender: { type: 'radio', initialValue: '' },
-    age: { type: 'number', initialValue: 0 },
-} satisfies FormSchema;
+import signupSchema from './Signup.schema.ts';
+import authService from '../../services/auth-service.ts';
+import styles from './Signup.module.css';
 
 export default function Signup () {
-    const { 
+    const navigate = useNavigate();
+    
+    const {
         formProps,
         fieldsProps,
         submitButtonProps,
         isSubmitting,
-        errors
-    } = useControlledForm(
-        schema,
-        // {
-        //     name: { type: 'text', initialValue: '' },
-        //     surname: { type: 'text', initialValue: '' },
-        //     username: { type: 'text', initialValue: '' },
-        //     bio: { type: 'textarea', initialValue: '' },
-        //     email: { type: 'email', initialValue: '' },
-        //     password: { type: 'password', initialValue: '' },
-        //     repeatPassword: { type: 'password', initialValue: '' },
-        //     isMinAge: { type: 'checkbox', initialValue: false },
-        //     agreeTerms: { type: 'checkbox', initialValue: false },
-        //     region: { type: 'select', initialValue: '' },
-        //     gender: { type: 'radio', initialValue: '' },
-        //     age: { type: 'number', initialValue: 0 },
-        // },
-        async function submitHandler (data) {
-            console.log('Submitting...');
-
-            const result = await (new Promise((resolve, reject) => {
-                setTimeout(() => resolve(data), 5000);
-            }));
-
-            console.log(result);
-        }
-    );
+        errors,
+        data
+    } = useControlledForm(signupSchema, async (data) => {
+        await authService.signUp(data);
+        navigate('/');
+    });
+    
     return (
-        <main>
-            <h1>Sign Up</h1>
+        <main className={styles.signup}>
+            <form className={styles.form} {...formProps}>
+                <h1 className={styles.heading}>Sign Up</h1>
 
-            <form {...formProps}>
-                <label htmlFor="name">Name</label>
-                <input id="name" {...fieldsProps.name} />
-                {errors.name && <p>{errors.name.join(' ')}</p>}
+                <div className={styles.field}>
+                    <label className={styles.label} htmlFor="name">Name</label>
+                    <input className={styles.input} id="name" {...fieldsProps.name} />
+                    {errors.name && <p className={styles['error-message']}>{errors.name.join(' ')}</p>}
+                </div>
 
-                <label htmlFor="surname">Surname</label>
-                <input id="surname" {...fieldsProps.surname} />
-                {errors.surname && <p>{errors.surname.join(' ')}</p>}
+                <div className={styles.field}>
+                    <label className={styles.label} htmlFor="username">Username</label>
+                    <input className={styles.input} id="username" {...fieldsProps.username} />
+                    {errors.username && <p className={styles['error-message']}>{errors.username.join(' ')}</p>}
+                </div>
 
-                <label htmlFor="username">Username</label>
-                <input id="username" {...fieldsProps.username} />
+                <div className={styles.field}>
+                    <label className={styles.label} htmlFor="email">Email</label>
+                    <input className={styles.input} id="email" {...fieldsProps.email} />
+                    {errors.email && <p className={styles['error-message']}>{errors.email.join(' ')}</p>}
+                </div>
 
-                <label htmlFor="bio">Bio</label>
-                <textarea id="bio" {...fieldsProps.bio}></textarea>
+                <div className={styles.field}>
+                    <label className={styles.label} htmlFor="password">Password</label>
+                    <input className={styles.input} id="password" {...fieldsProps.password} />
+                    {errors.password && <p className={styles['error-message']}>{errors.password.join(' ')}</p>}
+                </div>
 
-                <label htmlFor="email">Email</label>
-                <input id="email" {...fieldsProps.email} />
+                <div className={styles.field}>
+                    <label className={styles.label} htmlFor="repeatPassword">Repeat password</label>
+                    <input className={styles.input} id="repeatPassword" {...fieldsProps.repeatPassword} />
+                    {(errors.repeatPassword || data.password !== data.repeatPassword) && (
+                        <p className={styles['error-message']}>
+                            {[
+                                (data.password !== data.repeatPassword ? 'Passwords do not match.' : ''),
+                                ...(errors.repeatPassword ?? [])
+                            ].join(' ').trim()}
+                        </p>
+                    )}
+                </div>
 
-                <label htmlFor="password">Password</label>
-                <input id="password" {...fieldsProps.password} />
+                <div className={styles.field}>
+                    <div className={styles.field}>
+                        <input className={styles.input} id="isMinAge" {...fieldsProps.isMinAge} />
+                        <label className={styles.label} htmlFor="isMinAge">I am at least 13 years old.</label>
+                        {errors.isMinAge && <p className={styles['error-message']}>{errors.isMinAge.join(' ')}</p>}
+                    </div>
+                    
+                    {/* TODO: Add link to the Terms and Conditions page */}
+                    <div className={styles.field}>
+                        <input className={styles.input} id="agreeTerms" {...fieldsProps.agreeTerms} />
+                        <label className={styles.label} htmlFor="agreeTerms">I agree to the <Link to="/about">Terms and Conditions</Link>.</label>
+                        {errors.agreeTerms && <p className={styles['error-message']}>{errors.agreeTerms.join(' ')}</p>}
+                    </div>
+                </div>
 
-                <label htmlFor="repeatPassword">Repeat password</label>
-                <input id="repeatPassword" {...fieldsProps.repeatPassword} />
+                <div className={styles.controls}>
+                    <button className={styles.submit} {...submitButtonProps}>
+                        {isSubmitting ? 'Signing Up...' : 'Sign Up'}
+                    </button>
 
-                <input id="isMinAge" {...fieldsProps.isMinAge} />
-                <label htmlFor="isMinAge">I am at least 13 years old.</label>
-                
-                {/* TODO: Add link to the Terms and Conditions page */}
-                <input id="agreeTerms" {...fieldsProps.agreeTerms} />
-                <label htmlFor="agreeTerms">I agree to the <a href="/about">Terms and Conditions</a>.</label>
-
-                {/* TODO: Remove the following inputs, they are just for testing purposes: */}
-
-                <label htmlFor="region">Region</label>
-                <select id="region" {...fieldsProps.region}>
-                    <option value="europe">Europe</option>
-                    <option value="asia">Asia</option>
-                    <option value="other">Other</option>
-                </select>
-
-                <fieldset>
-                    <legend>Gender</legend>
-
-                    <input id="genderMale" {...fieldsProps.gender('male')} />
-                    <label htmlFor="genderMale">Male</label>
-
-                    <input id="genderFemale" {...fieldsProps.gender('female')} />
-                    <label htmlFor="genderFemale">Female</label>
-
-                    <input id="genderOther" {...fieldsProps.gender('other')} />
-                    <label htmlFor="genderOther">Other</label>
-                </fieldset>
-
-                <label htmlFor="age">Age</label>
-                <input id="age" {...fieldsProps.age} />
-
-                <button {...submitButtonProps}>
-                    {isSubmitting ? 'Signing Up...' : 'Sign Up'}
-                    {/* {'Sign Up'} */}
-                </button>
+                    <Link to="/auth/login">Already have an account?</Link>
+                </div>
             </form>
         </main>
     );

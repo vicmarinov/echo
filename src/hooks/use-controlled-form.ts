@@ -164,7 +164,10 @@ export default function useControlledForm<T extends Record<string, Types.FieldTy
         fieldsProps,
         submitButtonProps,
         isSubmitting,
-        // data,
-        errors
+        errors,
+        
+        get data () {
+            return data as Readonly<typeof data>;
+        }
     };
 }
