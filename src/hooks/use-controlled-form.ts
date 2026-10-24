@@ -1,26 +1,15 @@
 import { useState, type ChangeEvent, type FocusEvent, type SubmitEvent } from 'react';
+import type { UseControlledFormTypes as Types } from '../types/use-controlled-form.types.ts';
 
-import {
-    type InputElement,
-    type FieldType,
-    type FieldValueType,
-    type FieldValidator,
-    type FieldProps,
-    type GetFieldPropsReturn,
-    type FormSchema,
-    type FormData,
-    type FormErrors
-} from '../types/use-controlled-form.types.ts';
-
-export default function useControlledForm<T extends Record<string, FieldType>> (
-    schema: FormSchema<T>,
-    submitData: (data: FormData<T>) => void | Promise<void>
+export default function useControlledForm<T extends Record<string, Types.FieldType>> (
+    schema: Types.FormSchema<T>,
+    submitData: (data: Types.FormData<T>) => void | Promise<void>
 ) {
-    const [data, setData] = useState<FormData<T>>(() => {
+    const [data, setData] = useState<Types.FormData<T>>(() => {
         return Object.fromEntries(
             Object.entries(schema)
                 .map(([name, { initialValue }]) => [name, initialValue])
-        ) as FormData<T>
+        ) as Types.FormData<T>
     });
 
     const [dirtyFields, setDirtyFields] = useState<Record<keyof T, boolean>>(() => {
@@ -29,11 +18,11 @@ export default function useControlledForm<T extends Record<string, FieldType>> (
         ) as Record<keyof T, boolean>
     });
 
-    const [errors, setErrors] = useState<FormErrors<T>>({});
+    const [errors, setErrors] = useState<Types.FormErrors<T>>({});
 
     const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
 
-    const changeHandler = (event: ChangeEvent<InputElement>) => {
+    const changeHandler = (event: ChangeEvent<Types.InputElement>) => {
         const field = event.target;
 
         const name = field.name as keyof T;
@@ -42,16 +31,16 @@ export default function useControlledForm<T extends Record<string, FieldType>> (
         const value = field instanceof HTMLInputElement && type === 'checkbox'
             ? field.checked
             : type === 'number'
-            ? Number(field.value)
+            ? (field.value === '' ? '' : Number(field.value))
             : field.value;
         
         setData(data => ({
             ...data,
             [name]: value
-        } as FormData<T>));
+        } as Types.FormData<T>));
     }
 
-    const blurHandler = (event: FocusEvent<InputElement>) => {
+    const blurHandler = (event: FocusEvent<Types.InputElement>) => {
         const field = event.target;
         const name = field.name as keyof T;
 
@@ -90,7 +79,7 @@ export default function useControlledForm<T extends Record<string, FieldType>> (
             const props = getFieldProps(name, type);
             return [name, props];
         })
-    ) as {[K in keyof T]: GetFieldPropsReturn<T[K]>};
+    ) as {[K in keyof T]: Types.GetFieldPropsReturn<T[K]>};
 
     const formProps = { onSubmit: submitHandler };
 
@@ -102,45 +91,56 @@ export default function useControlledForm<T extends Record<string, FieldType>> (
     function getFieldProps<K extends keyof T> (
         name: K,
         type: T[K]
-    ): GetFieldPropsReturn<T[K]> {
-        const fieldProps: FieldProps<T[K]> = {
+    ): Types.GetFieldPropsReturn<T[K]> {
+        const baseProps = {
             name: name as string,
             onChange: changeHandler,
             onBlur: blurHandler
         };
 
-        const typesWithoutTypeProp: FieldType[]  = ['textarea', 'select'];
-        if (!typesWithoutTypeProp.includes(type)) {
-            fieldProps.type = type;
+        if (type === 'radio') {
+            return function (radioValue: Types.FieldValueType['radio']) {
+                return {
+                    ...baseProps,
+                    type: 'radio' as const,
+                    value: radioValue as Types.FieldValueType[T[K]],
+                    checked: data[name] === radioValue
+                };
+            } as unknown as Types.GetFieldPropsReturn<T[K]>
         }
 
         if (type === 'checkbox') {
-            fieldProps.checked = data[name] as boolean;
-        } else if (type === 'radio') {
-            return function (radioValue: FieldValueType['radio']) {
-                return {
-                    ...fieldProps,
-                    value: radioValue as FieldValueType[T[K]],
-                    checked: data[name] === radioValue
-                };
-            } as GetFieldPropsReturn<T[K]>
-        } else {
-            fieldProps.value = data[name];
+            return {
+                ...baseProps,
+                type: 'checkbox' as const,
+                checked: data[name] as boolean,
+            } as unknown as Types.GetFieldPropsReturn<T[K]>;
         }
 
-        return fieldProps as GetFieldPropsReturn<T[K]>;
+        if (type === 'textarea' || type === 'select') {
+            return {
+                ...baseProps,
+                value: data[name],
+            } as unknown as Types.GetFieldPropsReturn<T[K]>;
+        }
+
+        return {
+            ...baseProps,
+            type,
+            value: data[name],
+        } as unknown as Types.GetFieldPropsReturn<T[K]>;
     }
 
-    function validate (validateAllFields: boolean = false, forceDirtyField?: keyof T): FormErrors<T> {
+    function validate (validateAllFields: boolean = false, forceDirtyField?: keyof T): Types.FormErrors<T> {
         const validators = (Object.keys(schema) as Array<keyof T>).reduce((acc, name) => {
             if (schema[name].validator) {
                 acc[name] = schema[name].validator;
             }
 
             return acc;
-        }, {} as {[K in keyof T]?: FieldValidator<T[K]>});
+        }, {} as {[K in keyof T]?: Types.FieldValidator<T[K]>});
 
-        const errors: FormErrors<T> = {};
+        const errors: Types.FormErrors<T> = {};
 
         for (const name of Object.keys(validators) as Array<keyof T>) {
             const validator = validators[name]!;
