@@ -17,5 +17,5 @@ export namespace Profile {
 
 export namespace Post {
     export type Data = Database['public']['Tables']['posts']['Row'];
-    export type WithProfile = Data & { author: Profile.Data; };
+    export type WithAuthor = Omit<Post.Data, 'author'> & { author: Profile.Data; };
 };

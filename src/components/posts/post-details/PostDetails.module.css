@@ -71,10 +71,6 @@
     .post-details .container .text {
         font-size: 1.25rem;
     }
-
-    .post-details .container .details .info {
-        font-size: 0.8rem;
-    }
 }
 
 @media (width <= 1200px) {

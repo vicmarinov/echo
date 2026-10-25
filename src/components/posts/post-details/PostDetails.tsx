@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router';
 import postService from '../../../services/post-service.ts';
-import type { Post, Profile } from '../../../types/models.ts';
+import type { Post } from '../../../types/models.ts';
 import Author from '../../author/Author.tsx';
 import formatDateTime from '../../../utils/formatDateTime.ts';
 import styles from './PostDetails.module.css';
@@ -9,7 +9,7 @@ import styles from './PostDetails.module.css';
 export default function PostDetails () {
     const { postId: id = '' } = useParams();
     
-    const [data, setData] = useState<Post.WithProfile | null>(null);
+    const [data, setData] = useState<Post.WithAuthor | null>(null);
 
     useEffect(() => {
         // TODO: Add error handling
@@ -35,7 +35,7 @@ export default function PostDetails () {
                     
                     <section className={styles.details}>    
                         <section className={styles.info}>
-                            <Author {...data.author as Profile.Data} />
+                            <Author {...data.author} />
                             <p>
                                 <time dateTime={data.created_at}>{formatDateTime(data.created_at)}</time>
                             </p>

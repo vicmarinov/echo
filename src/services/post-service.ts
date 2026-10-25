@@ -3,11 +3,11 @@ import type { Post } from '../types/models.ts';
 
 async function getAll (
     abortController: AbortController
-): Promise<Post.Data[] | null> {
+): Promise<Post.WithAuthor[] | null> {
     // TODO: Add error handling
     const response = await supabase
         .from('posts')
-        .select()
+        .select(`*, author ( * )`)
         .order('created_at', { ascending: false })
         .abortSignal(abortController.signal);
     
@@ -17,14 +17,11 @@ async function getAll (
 async function getById (
     postId: string,
     abortController: AbortController
-): Promise<Post.WithProfile | null> {
+): Promise<Post.WithAuthor | null> {
     // TODO: Add error handling
     const response = await supabase
         .from('posts')
-        .select(`
-            *,
-            author ( * )
-        `)
+        .select(`*, author ( * )`)
         .eq('id', postId)
         .abortSignal(abortController.signal);
     

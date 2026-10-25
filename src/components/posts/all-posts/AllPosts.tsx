@@ -5,7 +5,7 @@ import Post from '../post/Post.tsx';
 import styles from './AllPosts.module.css';
 
 export default function AllPosts () {
-    const [posts, setPosts] = useState<PostTypes.Data[] | null>(null);
+    const [posts, setPosts] = useState<PostTypes.WithAuthor[] | null>(null);
 
     useEffect(() => {
         // TODO: Add error handling
