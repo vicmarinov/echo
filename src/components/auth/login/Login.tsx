@@ -2,6 +2,7 @@ import { Link, useNavigate } from 'react-router';
 import useControlledForm from '../../../hooks/use-controlled-form.ts';
 import loginSchema from './Login.schema.ts';
 import authService from '../../../services/auth-service.ts';
+import formStyles from '../../../styles/form.module.css';
 import styles from './../auth.module.css';
 
 export default function Login () {
@@ -20,23 +21,23 @@ export default function Login () {
 
     return (
         <main className={styles.auth}>
-            <form className={styles.form} {...formProps}>
-                <h1 className={styles.heading}>Log In</h1>
+            <form className={formStyles.form} {...formProps}>
+                <h1 className={formStyles.heading}>Log In</h1>
 
-                <div className={styles.field}>
-                    <label className={styles.label} htmlFor="email">Email</label>
-                    <input className={styles.input} id='email' {...fieldsProps.email} />
-                    {errors.email && <p className={styles['error-message']}>{errors.email.join(' ')}</p>}
+                <div className={formStyles.field}>
+                    <label className={formStyles.label} htmlFor="email">Email</label>
+                    <input className={formStyles.input} id='email' {...fieldsProps.email} />
+                    {errors.email && <p className={formStyles['error-message']}>{errors.email.join(' ')}</p>}
                 </div>
 
-                <div className={styles.field}>
-                    <label className={styles.label} htmlFor="password">Password</label>
-                    <input className={styles.input} id='password' {...fieldsProps.password} />
-                    {errors.password && <p className={styles['error-message']}>{errors.password.join(' ')}</p>}
+                <div className={formStyles.field}>
+                    <label className={formStyles.label} htmlFor="password">Password</label>
+                    <input className={formStyles.input} id='password' {...fieldsProps.password} />
+                    {errors.password && <p className={formStyles['error-message']}>{errors.password.join(' ')}</p>}
                 </div>
 
-                <div className={styles.controls}>
-                    <button className={styles.submit} {...submitButtonProps}>
+                <div className={formStyles.controls}>
+                    <button className={formStyles.submit} {...submitButtonProps}>
                         {isSubmitting ? 'Logging In...' : 'Log In'}
                     </button>
 
