@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router';
-import type { Post, Profile } from '../../../types/models.ts';
 import postService from '../../../services/post-service.ts';
-import styles from './PostDetails.module.css';
-import formatDateTime from '../../../utils/formatDateTime.ts';
+import type { Post, Profile } from '../../../types/models.ts';
 import Author from '../../author/Author.tsx';
+import formatDateTime from '../../../utils/formatDateTime.ts';
+import styles from './PostDetails.module.css';
 
 export default function PostDetails () {
     const { postId: id = '' } = useParams();
@@ -28,7 +28,10 @@ export default function PostDetails () {
                 <p className={styles.message}>Loading...</p>
             ) : (
                 <div className={styles.container}>
-                    <section className={styles.text}>{data?.text}</section>
+                    <section className={styles.text}>{
+                        data?.text.split('\n')
+                            .map((row, index) => <p key={index + 1}>{row}</p>)
+                    }</section>
                     
                     <section className={styles.details}>    
                         <section className={styles.info}>

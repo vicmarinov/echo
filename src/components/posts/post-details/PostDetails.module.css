@@ -36,6 +36,14 @@
     font-size: 2rem;
 }
 
+.post-details .container .text p:first-of-type {
+    margin-top: 0;
+}
+
+.post-details .container .text p:last-of-type {
+    margin-bottom: 0;
+}
+
 .post-details .container .details {
     flex: 1 1 55%;
 }

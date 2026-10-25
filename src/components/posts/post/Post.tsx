@@ -8,6 +8,11 @@ export default function Post (data: Post.Data) {
     const clickHandler = () => navigate(`/posts/${data.id}`);
 
     return (
-        <article className={styles.post} onClick={clickHandler}>{data.text}</article>
+        <article className={styles.post} onClick={clickHandler}>
+            {
+                ...data.text.split('\n')
+                    .map((row, index) => <p key={index + 1}>{row}</p>)
+            }
+        </article>
     );
 }
