@@ -9,7 +9,7 @@ import styles from './PostDetails.module.css';
 export default function PostDetails () {
     const { postId: id = '' } = useParams();
     
-    const [data, setData] = useState<Post.WithAuthor | null>(null);
+    const [data, setData] = useState<Post.WithAuthor | null>();
 
     useEffect(() => {
         // TODO: Add error handling
@@ -17,32 +17,39 @@ export default function PostDetails () {
         const abortController = new AbortController();
 
         postService.getById(id, abortController)
-            .then(setData);
+            .then(setData)
+            .catch(() => console.error('SERVICE ERROR: Failed to fetch post'));
         
         return () => abortController.abort();
     }, [id]);
 
     return (
-        <main className={styles['post-details']}>
-            {data === null ? (
+        <main className={styles['post-details']}>{
+            data === undefined
+            ? (
                 <p className={styles.message}>Loading...</p>
-            ) : (
-                <div className={styles.container}>
-                    <section className={styles.text}>{
-                        data?.text.split('\n')
-                            .map((row, index) => <p key={index + 1}>{row}</p>)
-                    }</section>
-                    
-                    <section className={styles.details}>    
-                        <section className={styles.info}>
-                            <Author {...data.author} />
-                            <p>
-                                <time dateTime={data.created_at}>{formatDateTime(data.created_at)}</time>
-                            </p>
-                        </section>
+            )
+            : data === null
+            ? (
+                <p className={styles.message}>Post not found <i className={styles.emoji}>😭</i></p>
+            )
+            : (
+            <div className={styles.container}>
+                <section className={styles.text}>{
+                    data?.text.split('\n')
+                        .map((row, index) => <p key={index + 1}>{row}</p>)
+                }</section>
+                
+                <section className={styles.details}>    
+                    <section className={styles.info}>
+                        <Author {...data.author} />
+                        <p>
+                            <time dateTime={data.created_at}>{formatDateTime(data.created_at)}</time>
+                        </p>
                     </section>
-                </div>    
-            )}
-        </main>
+                </section>
+            </div>    
+            )
+        }</main>
     );
 }

@@ -5,36 +5,35 @@ import Post from '../post/Post.tsx';
 import styles from './AllPosts.module.css';
 
 export default function AllPosts () {
-    const [posts, setPosts] = useState<PostTypes.WithAuthor[] | null>(null);
+    const [posts, setPosts] = useState<PostTypes.WithAuthor[]>();
 
     useEffect(() => {
-        // TODO: Add error handling
+        // TODO: Add real error handling
 
         const abortController = new AbortController();
 
         postService.getAll(abortController)
-            .then(data => data && setPosts(data));
+            .then(setPosts)
+            .catch(() => console.error('SERVICE ERROR: Failed to fetch posts'));
         
         return () => abortController.abort();
     }, []);
     
     return (
-        <main className={styles['all-posts']}>
-            {
-                posts === null
-                ? (
-                    <p className={styles.message}>Loading posts...</p>
-                )
-                : posts.length === 0
-                ? (
-                    <p className={styles.message}>There are no posts yet... <i className={styles.emoji}>😭</i></p>
-                )
-                : (
-                    <div className={styles.list}>
-                        {posts.map(data => <Post key={data.id} {...data} />)}
-                    </div>
-                ) 
-            }
-        </main>
+        <main className={styles['all-posts']}>{
+            posts === undefined
+            ? (
+                <p className={styles.message}>Loading posts...</p>
+            )
+            : posts.length === 0
+            ? (
+                <p className={styles.message}>There are no posts yet... <i className={styles.emoji}>😭</i></p>
+            )
+            : (
+                <div className={styles.list}>
+                    {posts.map(data => <Post key={data.id} {...data} />)}
+                </div>
+            ) 
+        }</main>
     );
 }
