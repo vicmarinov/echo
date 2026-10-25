@@ -1,0 +1,12 @@
+.create-post {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+@media (800px <= width <= 1050px) {
+    .create-post {
+        padding-left: 40px;
+        padding-right: 40px;
+    }
+}

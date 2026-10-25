@@ -33,9 +33,27 @@ async function getById (
     return postData.at(0) ?? null;
 }
 
+async function create (
+    { text }: Post.Create,
+    abortController: AbortController
+): Promise<string> {
+    const response = await supabase
+        .from('posts')
+        .insert({ text })
+        .select()
+        .abortSignal(abortController.signal);
+
+    // TODO: Add error handling
+    if (!response.success) throw response.error;
+
+    const createdPost = response.data.at(0) as Post.Data;
+    return createdPost.id;
+}
+
 const postService = {
     getAll,
-    getById
+    getById,
+    create
 };
 
 export default postService;

@@ -22,7 +22,7 @@ export type Database = {
           text: string
         }
         Insert: {
-          author: string
+          author?: string
           created_at?: string
           id?: string
           text: string
@@ -66,7 +66,7 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      fn_get_current_username: { Args: never; Returns: string }
     }
     Enums: {
       [_ in never]: never

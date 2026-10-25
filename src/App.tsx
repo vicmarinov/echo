@@ -4,6 +4,7 @@ import Header from './components/header/Header.tsx';
 import Signup from './components/auth/signup/Signup.tsx';
 import Login from './components/auth/login/Login.tsx';
 import PostDetails from './components/posts/post-details/PostDetails.tsx';
+import CreatePost from './components/posts/create-post/CreatePost.tsx';
 
 export default function App () {
     return (
@@ -25,6 +26,7 @@ export default function App () {
                 <Route path='/posts'>
                     <Route index element={<AllPosts />} />
                     <Route path=':postId' element={<PostDetails />} />
+                    <Route path='create' element={<CreatePost />} />
                 </Route>
             </Routes>
         </>
