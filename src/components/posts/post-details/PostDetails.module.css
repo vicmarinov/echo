@@ -1,7 +1,5 @@
 .post-details {
-    flex: 1 1 auto;
     height: 100vh;
-    padding: 50px 100px;
 }
 
 .post-details .message {
@@ -57,9 +55,10 @@
     padding: 0.25rem 0;
 }
 
-@media (width <= 1400px) {
+@media (800px <= width <= 1400px) {
     .post-details {
-        padding: 50px 75px;
+        padding-left: 75px;
+        padding-right: 75px;
     }
     
     .post-details .container .text {
@@ -86,10 +85,6 @@
 }
 
 @media (width <= 800px) {
-    .post-details {
-        padding: 50px 40px 110px;
-    }
-
     .post-details .message {
         font-size: 1.25rem;
     }

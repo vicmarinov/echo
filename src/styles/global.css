@@ -23,6 +23,11 @@ body {
     display: flex;
 }
 
+main {
+    flex: 1 1 auto;
+    padding: 50px 100px;
+}
+
 a {
     text-decoration: none;
     color: var(--accent-color);
@@ -36,5 +41,9 @@ a:hover {
 @media (width <= 800px) {
     #root {
         display: block;
+    }
+
+    main {
+        padding: 50px 1rem 100px;
     }
 }

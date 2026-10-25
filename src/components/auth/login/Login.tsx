@@ -3,7 +3,7 @@ import useControlledForm from '../../../hooks/use-controlled-form.ts';
 import loginSchema from './Login.schema.ts';
 import authService from '../../../services/auth-service.ts';
 import formStyles from '../../../styles/form.module.css';
-import styles from './../auth.module.css';
+import styles from './../Auth.module.css';
 
 export default function Login () {
     const navigate = useNavigate();
