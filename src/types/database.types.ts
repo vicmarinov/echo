@@ -16,21 +16,32 @@ export type Database = {
     Tables: {
       posts: {
         Row: {
+          author: string
           created_at: string
           id: string
           text: string
         }
         Insert: {
+          author: string
           created_at?: string
           id?: string
           text: string
         }
         Update: {
+          author?: string
           created_at?: string
           id?: string
           text?: string
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "posts_author_fkey"
+            columns: ["author"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["username"]
+          },
+        ]
       }
       profiles: {
         Row: {

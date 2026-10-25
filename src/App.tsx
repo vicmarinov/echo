@@ -3,6 +3,7 @@ import AllPosts from './components/posts/all-posts/AllPosts.tsx';
 import Header from './components/header/Header.tsx';
 import Signup from './components/auth/signup/Signup.tsx';
 import Login from './components/auth/login/Login.tsx';
+import PostDetails from './components/posts/post-details/PostDetails.tsx';
 
 export default function App () {
     return (
@@ -11,14 +12,19 @@ export default function App () {
             
             <Routes>
                 <Route path='/' element={<Navigate to='/posts' />} />
-                <Route path='/posts' element={<AllPosts />} />
-                
-                {/* TODO: Implement the following routes and their corresponding components */}
+
+                {/* TODO: Implement the following route and its corresponding component */}
                 <Route path='/about' element={<p>About: To be implemented...</p>} />
+                <Route path='/:username' element={<p>Profile: To be implemented...</p>} />
 
                 <Route path='/auth'>
                     <Route path='login' element={<Login />} />
                     <Route path='signup' element={<Signup />} />
+                </Route>
+
+                <Route path='/posts'>
+                    <Route index element={<AllPosts />} />
+                    <Route path=':postId' element={<PostDetails />} />
                 </Route>
             </Routes>
         </>

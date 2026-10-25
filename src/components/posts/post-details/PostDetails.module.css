@@ -1,0 +1,98 @@
+.post-details {
+    flex: 1 1 auto;
+    height: 100vh;
+    padding: 50px 100px;
+}
+
+.post-details .message {
+    color: var(--inactive-color);
+    text-align: center;
+    font-style: italic;
+    font-size: 1.5rem;
+}
+
+.post-details .container {
+    height: 100%;
+
+    display: flex;
+    gap: 2.25rem;
+}
+
+.post-details .container .text,
+.post-details .container .details {
+    overflow-y: scroll;
+}
+
+.post-details .container .text,
+.post-details .container .details .info {
+    background: var(--card-background);
+    box-shadow: var(--shadow);
+    border-radius: 40px;
+    padding: 40px;
+}
+
+.post-details .container .text {
+    flex: 1 1 45%;
+    font-size: 2rem;
+}
+
+.post-details .container .details {
+    flex: 1 1 55%;
+}
+
+.post-details .container .details .info {
+    color: var(--inactive-color);
+}
+
+.post-details .container .details .info > * {
+    margin: 0;
+    padding: 0.25rem 0;
+}
+
+@media (width <= 1400px) {
+    .post-details {
+        padding: 50px 75px;
+    }
+    
+    .post-details .container .text {
+        font-size: 1.5rem;
+    }
+}
+
+@media (width <= 1300px) {
+    .post-details .container .text {
+        font-size: 1.25rem;
+    }
+
+    .post-details .container .details .info {
+        font-size: 0.8rem;
+    }
+}
+
+@media (width <= 1200px) {
+    .post-details {
+        height: auto;
+        min-height: 100vh;
+    }
+
+    .post-details .container {
+        flex-flow: column;
+        height: auto;
+    }
+}
+
+@media (width <= 800px) {
+    .post-details {
+        padding: 50px 40px 110px;
+    }
+
+    .post-details .message {
+        font-size: 1.25rem;
+    }
+}
+
+@media (width <= 400px) {
+    .post-details .container .text {
+        font-size: 1rem;
+    }
+}

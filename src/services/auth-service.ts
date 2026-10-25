@@ -1,7 +1,9 @@
 import supabase from '../lib/supabase.ts';
 import type { User } from '../types/models.ts';
 
-async function signUp ({ email, password, name, username }: User.SignupData): Promise<void> {
+async function signUp (
+    { email, password, name, username }: User.SignupData
+): Promise<void> {
     // TODO: Add error handling
     // TODO: Store the current user
     const response = await supabase.auth.signUp({
@@ -15,7 +17,9 @@ async function signUp ({ email, password, name, username }: User.SignupData): Pr
     if (response.error) throw response.error;
 }
 
-async function logIn ({ email, password }: User.LoginData): Promise<void> {
+async function logIn (
+    { email, password }: User.LoginData
+): Promise<void> {
     // TODO: Add error handling
     // TODO: Store the current user
     const response = await supabase.auth.signInWithPassword({ email, password });
