@@ -9,7 +9,7 @@
     font-size: 1.5rem;
 }
 
-.all-posts .message .emoji {
+.post-details .message .emoji {
     font-style: normal;
 }
 
@@ -48,6 +48,10 @@
 
 .post-details .container .details {
     flex: 1 1 55%;
+    
+    display: flex;
+    flex-flow: column;
+    gap: 2rem;
 }
 
 .post-details .container .details .info {
@@ -57,6 +61,27 @@
 .post-details .container .details .info > * {
     margin: 0;
     padding: 0.25rem 0;
+}
+
+.post-details .container .details .controls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.post-details .container .details .controls .edit-button {
+    background: var(--accent-color);
+    color: var(--secondary-color);
+
+    font-size: 1.25rem;
+    padding: 0.5rem 3rem;
+    border-radius: 2.25rem;
+    text-decoration: none;
+}
+
+.post-details .container .details .controls .edit-button:hover {
+    scale: 1.05;
+    transition: 300ms;
 }
 
 @media (800px <= width <= 1400px) {

@@ -17,7 +17,7 @@ async function getAll (
 }
 
 async function getById (
-    postId: string,
+    postId: Post.Data['id'],
     abortController: AbortController
 ): Promise<Post.WithAuthor | null> {
     const response = await supabase
@@ -50,10 +50,26 @@ async function create (
     return createdPost.id;
 }
 
+async function edit (
+    postId: Post.Data['id'],
+    { text }: Post.Edit,
+    abortController: AbortController
+): Promise<void> {
+    const response = await supabase
+        .from('posts')
+        .update({ text })
+        .eq('id', postId)
+        .abortSignal(abortController.signal);
+    
+    // TODO: Add error handling
+    if (!response.success) throw response.error;
+}
+
 const postService = {
     getAll,
     getById,
-    create
+    create,
+    edit
 };
 
 export default postService;

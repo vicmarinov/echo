@@ -1,0 +1,31 @@
+.save-post {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.save-post .message {
+    color: var(--inactive-color);
+    text-align: center;
+    font-style: italic;
+    font-size: 1.5rem;
+
+    align-self: flex-start;
+}
+
+.save-post .message .emoji {
+    font-style: normal;
+}
+
+@media (800px <= width <= 1050px) {
+    .save-post {
+        padding-left: 40px;
+        padding-right: 40px;
+    }
+}
+
+@media (width <= 800px) {
+    .save-post .message {
+        font-size: 1.25rem;
+    }
+}

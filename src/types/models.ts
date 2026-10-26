@@ -19,4 +19,6 @@ export namespace Post {
     export type Data = Database['public']['Tables']['posts']['Row'];
     export type WithAuthor = Omit<Post.Data, 'author'> & { author: Profile.Data; };
     export type Create = Database['public']['Tables']['posts']['Insert'];
+    type Update = Database['public']['Tables']['posts']['Update'];
+    export type Edit = Required<Omit<Update, 'author' | 'created_at' | 'id'>>;
 };

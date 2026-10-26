@@ -4,7 +4,8 @@ import Header from './components/header/Header.tsx';
 import Signup from './components/auth/signup/Signup.tsx';
 import Login from './components/auth/login/Login.tsx';
 import PostDetails from './components/posts/post-details/PostDetails.tsx';
-import CreatePost from './components/posts/create-post/CreatePost.tsx';
+import CreatePost from './components/posts/save-post/create-post/CreatePost.tsx';
+import EditPost from './components/posts/save-post/edit-post/EditPost.tsx';
 
 export default function App () {
     return (
@@ -27,6 +28,7 @@ export default function App () {
                     <Route index element={<AllPosts />} />
                     <Route path=':postId' element={<PostDetails />} />
                     <Route path='create' element={<CreatePost />} />
+                    <Route path=':postId/edit' element={<EditPost />} />
                 </Route>
             </Routes>
         </>

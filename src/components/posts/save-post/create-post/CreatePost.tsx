@@ -1,8 +1,8 @@
-import useControlledForm from '../../../hooks/use-controlled-form.ts';
+import useControlledForm from '../../../../hooks/use-controlled-form.ts';
 import createPostSchema from './CreatePost.schema.ts';
-import formStyles from '../../../styles/form.module.css';
-import styles from './CreatePost.module.css';
-import postService from '../../../services/post-service.ts';
+import formStyles from '../../../../styles/form.module.css';
+import styles from '../SavePost.module.css';
+import postService from '../../../../services/post-service.ts';
 import { useNavigate } from 'react-router';
 
 export default function CreatePost () {
@@ -22,7 +22,7 @@ export default function CreatePost () {
     });
     
     return (
-        <main className={styles['create-post']}>
+        <main className={styles['save-post']}>
             <form className={formStyles.form} {...formProps}>
                 <h1 className={formStyles.heading}>Create Post</h1>
 

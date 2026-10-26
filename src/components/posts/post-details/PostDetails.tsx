@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router';
+import { Link, useParams } from 'react-router';
 import postService from '../../../services/post-service.ts';
 import type { Post } from '../../../types/models.ts';
 import Author from '../../author/Author.tsx';
@@ -46,6 +46,10 @@ export default function PostDetails () {
                         <p>
                             <time dateTime={data.created_at}>{formatDateTime(data.created_at)}</time>
                         </p>
+                    </section>
+                    <section className={styles.controls}>
+                        {/* TODO: Add conditional rendering and authorization for the controls */}
+                        <Link to={`/posts/${id}/edit`} className={styles['edit-button']}>Edit</Link>
                     </section>
                 </section>
             </div>    
