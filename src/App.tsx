@@ -6,10 +6,11 @@ import Login from './components/auth/login/Login.tsx';
 import PostDetails from './components/posts/post-details/PostDetails.tsx';
 import CreatePost from './components/posts/save-post/create-post/CreatePost.tsx';
 import EditPost from './components/posts/save-post/edit-post/EditPost.tsx';
+import { CurrentProfileProvider } from './contexts/current-profile-context.tsx';
 
 export default function App () {
     return (
-        <>
+        <CurrentProfileProvider>
             <Header />
             
             <Routes>
@@ -31,6 +32,6 @@ export default function App () {
                     <Route path=':postId/edit' element={<EditPost />} />
                 </Route>
             </Routes>
-        </>
+        </CurrentProfileProvider>
     );
 }

@@ -1,5 +1,6 @@
+import { AuthSessionMissingError, type User as SupabaseUser } from '@supabase/supabase-js';
 import supabase from '../lib/supabase.ts';
-import type { User } from '../types/models.ts';
+import type { Profile, User } from '../types/models.ts';
 
 async function signUp (
     { email, password, name, username }: User.SignupData
@@ -26,9 +27,37 @@ async function logIn (
     if (response.error) throw response.error;
 }
 
+async function getCurrentUser (): Promise<SupabaseUser | null> {
+    // TODO: Add error handling
+    const response = await supabase.auth.getUser();
+
+    if (response.error instanceof AuthSessionMissingError) {
+        return null;
+    } else if (response.error) throw response.error;
+
+    return response.data.user;
+}
+
+async function getCurrentUserProfile (): Promise<Profile.Data | null> {
+    // TODO: Add error handling
+    const currentUser: SupabaseUser | null = await getCurrentUser();
+
+    if (currentUser === null) return null;
+
+    const response = await supabase
+        .from('profiles')
+        .select()
+        .eq('user_id', currentUser.id);
+    
+    if (!response.success) throw response.error;
+    
+    return response.data.at(0)!;
+}
+
 const authService = {
     signUp,
-    logIn
+    logIn,
+    getCurrentUserProfile
 };
 
 export default authService;
