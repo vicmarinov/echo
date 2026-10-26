@@ -5,18 +5,11 @@ export default function useControlledForm<T extends Record<string, Types.FieldTy
     schema: Types.FormSchema<T>,
     submitData: (data: Types.FormData<T>) => void | Promise<void>
 ) {
-    const [data, setData] = useState<Types.FormData<T>>(() => {
-        return Object.fromEntries(
-            Object.entries(schema)
-                .map(([name, { initialValue }]) => [name, initialValue])
-        ) as Types.FormData<T>
-    });
+    const [data, setData] = useState<Types.FormData<T>>(makeInitialData);
 
-    const [dirtyFields, setDirtyFields] = useState<Record<keyof T, boolean>>(() => {
-        return Object.fromEntries(
-            Object.keys(schema).map(name => [name, false])
-        ) as Record<keyof T, boolean>
-    });
+    const [dirtyFields, setDirtyFields] = useState<Record<keyof T, boolean>>(
+        () => makeDirtyFields(false)
+    );
 
     const [errors, setErrors] = useState<Types.FormErrors<T>>({});
 
@@ -55,11 +48,7 @@ export default function useControlledForm<T extends Record<string, Types.FieldTy
     const submitHandler = async (event: SubmitEvent<HTMLFormElement>) => {
         event.preventDefault();
 
-        const allFieldsDirty = Object.fromEntries(
-            Object.keys(schema).map(name => [name, true])
-        ) as Record<keyof T, boolean>;
-        
-        setDirtyFields(allFieldsDirty);
+        makeDirtyFields(true);
 
         const hasFoundErrors = !!Object.keys(validate(true)).length;
         if (hasFoundErrors) return;
@@ -68,6 +57,10 @@ export default function useControlledForm<T extends Record<string, Types.FieldTy
 
         try {
             await submitData(data);
+
+            setData(makeInitialData);
+            setDirtyFields(makeDirtyFields(false));
+            setErrors({});
         } finally {
             setIsSubmitting(false);
         }
@@ -157,6 +150,19 @@ export default function useControlledForm<T extends Record<string, Types.FieldTy
 
         setErrors(errors);
         return errors;
+    }
+
+    function makeInitialData (): Types.FormData<T> {
+        return Object.fromEntries(
+            Object.entries(schema)
+                .map(([name, { initialValue }]) => [name, initialValue])
+        ) as Types.FormData<T>
+    }
+
+    function makeDirtyFields (condition: boolean): Record<keyof T, boolean> {
+        return Object.fromEntries(
+            Object.keys(schema).map(name => [name, condition])
+        ) as Record<keyof T, boolean>
     }
 
     return {
