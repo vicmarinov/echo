@@ -26,4 +26,5 @@ export namespace Post {
 export namespace Comment {
     export type Data = Database['public']['Tables']['comments']['Row'];
     export type Create = Database['public']['Tables']['comments']['Insert'];
+    export type WithAuthor = Omit<Comment.Data, 'author'> & { author: Profile.Data };
 }

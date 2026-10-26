@@ -1,0 +1,11 @@
+.comment {
+    background: var(--card-background);
+    box-shadow: var(--shadow);
+    border-radius: 40px;
+    padding: 40px;
+}
+
+.comment .text {
+    margin: 0;
+    padding: 0.5rem 0;
+}
