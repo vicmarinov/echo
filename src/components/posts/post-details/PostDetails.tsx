@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Link, useParams } from 'react-router';
+import { Link, useNavigate, useParams } from 'react-router';
 import postService from '../../../services/post-service.ts';
 import type { Post } from '../../../types/models.ts';
 import Author from '../../author/Author.tsx';
@@ -22,6 +22,13 @@ export default function PostDetails () {
         
         return () => abortController.abort();
     }, [id]);
+    
+    const navigate = useNavigate();
+
+    const deleteHandler = async () => {
+        await postService.remove(id);
+        navigate('/');
+    }
 
     return (
         <main className={styles['post-details']}>{
@@ -50,6 +57,7 @@ export default function PostDetails () {
                     <section className={styles.controls}>
                         {/* TODO: Add conditional rendering and authorization for the controls */}
                         <Link to={`/posts/${id}/edit`} className={styles['edit-button']}>Edit</Link>
+                        <button onClick={deleteHandler} className={styles['delete-button']}>Delete</button>
                     </section>
                 </section>
             </div>    

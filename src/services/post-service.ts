@@ -61,11 +61,23 @@ async function edit (
     if (!response.success) throw response.error;
 }
 
+async function remove (
+    postId: Post.Data['id']
+): Promise<void> {
+    const response = await supabase
+        .from('posts')
+        .delete().eq('id', postId);
+
+    // TODO: Add error handling
+    if (!response.success) throw response.error;
+}
+
 const postService = {
     getAll,
     getById,
     create,
-    edit
+    edit,
+    remove
 };
 
 export default postService;

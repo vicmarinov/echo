@@ -22,6 +22,7 @@
 
 .post-details .container .text,
 .post-details .container .details {
+    overflow-x: visible;
     overflow-y: scroll;
 }
 
@@ -69,19 +70,29 @@
     gap: 1rem;
 }
 
-.post-details .container .details .controls .edit-button {
-    background: var(--accent-color);
-    color: var(--secondary-color);
-
+.post-details .container .details .controls .edit-button,
+.post-details .container .details .controls .delete-button {
     font-size: 1.25rem;
     padding: 0.5rem 3rem;
+    border: none;
     border-radius: 2.25rem;
     text-decoration: none;
 }
 
-.post-details .container .details .controls .edit-button:hover {
+.post-details .container .details .controls .edit-button:hover,
+.post-details .container .details .controls .delete-button:hover {
     scale: 1.05;
     transition: 300ms;
+}
+
+.post-details .container .details .controls .edit-button {
+    background: var(--accent-color);
+    color: var(--secondary-color);
+}
+
+.post-details .container .details .controls .delete-button {
+    background: var(--danger-color);
+    color: var(--secondary-color);
 }
 
 @media (800px <= width <= 1400px) {
