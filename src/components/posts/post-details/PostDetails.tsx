@@ -35,6 +35,9 @@ export default function PostDetails () {
         if (!isOwner) {
             return <Navigate to={`/posts/${id}`} />;
         }
+
+        const isConfirmed = confirm('Are you sure you want to delete this post?');
+        if (!isConfirmed) return;
         
         await postService.remove(id);
         navigate('/');
