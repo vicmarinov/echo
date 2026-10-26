@@ -5,6 +5,7 @@ import type { Post } from '../../../types/models.ts';
 import Author from '../../author/Author.tsx';
 import formatDateTime from '../../../utils/formatDateTime.ts';
 import styles from './PostDetails.module.css';
+import CommentSection from '../../comments/comment-section/CommentSection.tsx';
 
 export default function PostDetails () {
     const { postId: id = '' } = useParams();
@@ -54,11 +55,14 @@ export default function PostDetails () {
                             <time dateTime={data.created_at}>{formatDateTime(data.created_at)}</time>
                         </p>
                     </section>
+                    
                     <section className={styles.controls}>
                         {/* TODO: Add conditional rendering and authorization for the controls */}
                         <Link to={`/posts/${id}/edit`} className={styles['edit-button']}>Edit</Link>
                         <button onClick={deleteHandler} className={styles['delete-button']}>Delete</button>
                     </section>
+                    
+                    <CommentSection/>
                 </section>
             </div>    
             )

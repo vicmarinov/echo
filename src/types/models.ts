@@ -22,3 +22,8 @@ export namespace Post {
     type Update = Database['public']['Tables']['posts']['Update'];
     export type Edit = Required<Omit<Update, 'author' | 'created_at' | 'id'>>;
 };
+
+export namespace Comment {
+    export type Data = Database['public']['Tables']['comments']['Row'];
+    export type Create = Database['public']['Tables']['comments']['Insert'];
+}
