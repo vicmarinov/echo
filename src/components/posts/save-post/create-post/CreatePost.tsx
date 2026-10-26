@@ -15,9 +15,7 @@ export default function CreatePost () {
         isSubmitting,
         errors
     } = useControlledForm(createPostSchema, async (data) => {
-        const createdPostId: string = await postService
-            .create(data, new AbortController());
-        
+        const createdPostId: string = await postService.create(data);
         navigate(`/posts/${createdPostId}`);
     });
     

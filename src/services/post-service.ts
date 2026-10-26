@@ -34,14 +34,12 @@ async function getById (
 }
 
 async function create (
-    { text }: Post.Create,
-    abortController: AbortController
+    { text }: Post.Create
 ): Promise<string> {
     const response = await supabase
         .from('posts')
         .insert({ text })
-        .select()
-        .abortSignal(abortController.signal);
+        .select();
 
     // TODO: Add error handling
     if (!response.success) throw response.error;
@@ -52,14 +50,12 @@ async function create (
 
 async function edit (
     postId: Post.Data['id'],
-    { text }: Post.Edit,
-    abortController: AbortController
+    { text }: Post.Edit
 ): Promise<void> {
     const response = await supabase
         .from('posts')
         .update({ text })
-        .eq('id', postId)
-        .abortSignal(abortController.signal);
+        .eq('id', postId);
     
     // TODO: Add error handling
     if (!response.success) throw response.error;

@@ -46,8 +46,7 @@ function EditPostForm ({ initialData }: { initialData : Post.WithAuthor }) {
         errors
     } = useControlledForm(getEditPostSchema(initialData), async (data) => {
         const postId = initialData.id;
-        await postService.edit(postId, data, new AbortController());
-
+        await postService.edit(postId, data);
         navigate(`/posts/${postId}`);
     });
     
