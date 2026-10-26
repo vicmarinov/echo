@@ -6,7 +6,6 @@ async function signUp (
     { email, password, name, username }: User.SignupData
 ): Promise<void> {
     // TODO: Add error handling
-    // TODO: Store the current user
     const response = await supabase.auth.signUp({
         email,
         password,
@@ -22,13 +21,17 @@ async function logIn (
     { email, password }: User.LoginData
 ): Promise<void> {
     // TODO: Add error handling
-    // TODO: Store the current user
     const response = await supabase.auth.signInWithPassword({ email, password });
     if (response.error) throw response.error;
 }
 
-async function getCurrentUser (): Promise<SupabaseUser | null> {
+async function logOut (): Promise<void> {
     // TODO: Add error handling
+    const response = await supabase.auth.signOut();
+    if (response.error) throw response.error;
+}
+
+async function getCurrentUser (): Promise<SupabaseUser | null> {
     const response = await supabase.auth.getUser();
 
     if (response.error instanceof AuthSessionMissingError) {
@@ -39,7 +42,6 @@ async function getCurrentUser (): Promise<SupabaseUser | null> {
 }
 
 async function getCurrentUserProfile (): Promise<Profile.Data | null> {
-    // TODO: Add error handling
     const currentUser: SupabaseUser | null = await getCurrentUser();
 
     if (currentUser === null) return null;
@@ -57,6 +59,7 @@ async function getCurrentUserProfile (): Promise<Profile.Data | null> {
 const authService = {
     signUp,
     logIn,
+    logOut,
     getCurrentUserProfile
 };
 

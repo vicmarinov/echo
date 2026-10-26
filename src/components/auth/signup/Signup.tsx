@@ -4,9 +4,12 @@ import signupSchema from './Signup.schema.ts';
 import authService from '../../../services/auth-service.ts';
 import formStyles from '../../../styles/form.module.css';
 import styles from './../Auth.module.css';
+import useCurrentProfile from '../../../hooks/use-current-profile.ts';
 
 export default function Signup () {
     const navigate = useNavigate();
+
+    const { refreshProfile } = useCurrentProfile();
     
     const {
         formProps,
@@ -17,6 +20,7 @@ export default function Signup () {
         data
     } = useControlledForm(signupSchema, async (data) => {
         await authService.signUp(data);
+        await refreshProfile();
         navigate('/');
     });
     
