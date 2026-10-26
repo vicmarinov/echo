@@ -5,6 +5,7 @@ import type { Comment as CommentType } from '../../../types/models.ts';
 import AddComment from '../add-comment/AddComment.tsx';
 import Comment from '../comment/Comment.tsx';
 import styles from './CommentSection.module.css';
+import useCurrentProfile from '../../../hooks/use-current-profile.ts';
 
 export default function CommentSection () {
     const { postId = '' } = useParams();
@@ -24,6 +25,9 @@ export default function CommentSection () {
         return () => abortController.abort();
     }, [postId]);
 
+    const { profile } = useCurrentProfile();
+    const isAuth = !!profile;
+
     return (
         <section className={styles['comment-section']}>
             <h2 className={styles.heading}>Comments</h2>
@@ -39,7 +43,7 @@ export default function CommentSection () {
                 ? (
                     <div>
                         <p className={styles.message}>No comments yet.</p>
-                        <p className={styles.message}>Be the first to comment!</p>
+                        {isAuth && <p className={styles.message}>Be the first to comment!</p>}
                     </div>
                 )
                 : (

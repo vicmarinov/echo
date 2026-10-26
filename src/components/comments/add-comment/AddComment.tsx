@@ -3,6 +3,7 @@ import useControlledForm from '../../../hooks/use-controlled-form.ts';
 import addCommentSchema from './AddComment.schema.ts';
 import commentService from '../../../services/comment-service.ts';
 import styles from './AddComment.module.css';
+import useCurrentProfile from '../../../hooks/use-current-profile.ts';
 
 export default function AddComment () {
     const { postId = '' } = useParams();
@@ -17,6 +18,10 @@ export default function AddComment () {
         await commentService.create({ post_id: postId, text: data.text });
         navigate(`/posts/${postId}`);
     });
+
+    const { profile } = useCurrentProfile();
+    const isAuth = !!profile;
+    if (!isAuth) return;
     
     return (
         <form className={styles['add-comment-form']} {...formProps}>

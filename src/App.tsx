@@ -7,6 +7,7 @@ import PostDetails from './components/posts/post-details/PostDetails.tsx';
 import CreatePost from './components/posts/save-post/create-post/CreatePost.tsx';
 import EditPost from './components/posts/save-post/edit-post/EditPost.tsx';
 import { CurrentProfileProvider } from './contexts/current-profile-context.tsx';
+import ProtectedRoute from './components/protected-route/ProtectedRoute.tsx';
 
 export default function App () {
     return (
@@ -20,16 +21,17 @@ export default function App () {
                 <Route path='/about' element={<p>About: To be implemented...</p>} />
                 <Route path='/:username' element={<p>Profile: To be implemented...</p>} />
 
-                <Route path='/auth'>
-                    <Route path='login' element={<Login />} />
-                    <Route path='signup' element={<Signup />} />
+                <Route path="/posts" element={<AllPosts />} />
+                <Route path='/posts/:postId' element={<PostDetails />} />
+
+                <Route element={<ProtectedRoute only='auth' />}>
+                    <Route path='/posts/create' element={<CreatePost />} />
+                    <Route path='/posts/:postId/edit' element={<EditPost />} />
                 </Route>
 
-                <Route path='/posts'>
-                    <Route index element={<AllPosts />} />
-                    <Route path=':postId' element={<PostDetails />} />
-                    <Route path='create' element={<CreatePost />} />
-                    <Route path=':postId/edit' element={<EditPost />} />
+                <Route element={<ProtectedRoute only='guest' />}>
+                    <Route path='/auth/login' element={<Login />} />
+                    <Route path='/auth/signup' element={<Signup />} />
                 </Route>
             </Routes>
         </CurrentProfileProvider>

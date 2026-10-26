@@ -1,11 +1,12 @@
 import { useEffect, useState } from 'react';
-import { Link, useNavigate, useParams } from 'react-router';
+import { Link, Navigate, useNavigate, useParams } from 'react-router';
 import postService from '../../../services/post-service.ts';
 import type { Post } from '../../../types/models.ts';
 import Author from '../../author/Author.tsx';
 import formatDateTime from '../../../utils/formatDateTime.ts';
 import styles from './PostDetails.module.css';
 import CommentSection from '../../comments/comment-section/CommentSection.tsx';
+import useCurrentProfile from '../../../hooks/use-current-profile.ts';
 
 export default function PostDetails () {
     const { postId: id = '' } = useParams();
@@ -24,9 +25,17 @@ export default function PostDetails () {
         return () => abortController.abort();
     }, [id]);
     
+    const { profile } = useCurrentProfile();
+    const isAuth = !!profile;
+    const isOwner = isAuth && data?.author.username === profile.username;
+
     const navigate = useNavigate();
 
     const deleteHandler = async () => {
+        if (!isOwner) {
+            return <Navigate to={`/posts/${id}`} />;
+        }
+        
         await postService.remove(id);
         navigate('/');
     }
@@ -56,11 +65,12 @@ export default function PostDetails () {
                         </p>
                     </section>
                     
-                    <section className={styles.controls}>
-                        {/* TODO: Add conditional rendering and authorization for the controls */}
-                        <Link to={`/posts/${id}/edit`} className={styles['edit-button']}>Edit</Link>
-                        <button onClick={deleteHandler} className={styles['delete-button']}>Delete</button>
-                    </section>
+                    {isOwner && (    
+                        <section className={styles.controls}>
+                            <Link to={`/posts/${id}/edit`} className={styles['edit-button']}>Edit</Link>
+                            <button onClick={deleteHandler} className={styles['delete-button']}>Delete</button>
+                        </section>
+                    )}
                     
                     <CommentSection/>
                 </section>

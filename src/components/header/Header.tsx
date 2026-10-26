@@ -4,7 +4,8 @@ import authService from '../../services/auth-service.ts';
 import styles from './Header.module.css';
 
 export default function Header () {
-    const { refreshProfile } = useCurrentProfile();
+    const { profile, refreshProfile } = useCurrentProfile();
+    const isAuth = !!profile;
 
     const logoutHandler = async () => {
         await authService.logOut();
@@ -26,11 +27,20 @@ export default function Header () {
             <nav className={styles.navigation}>
                 <ol className={styles.list}>
                     <li><NavLink to="/posts" className={navLinkClassName}>Posts</NavLink></li>
-                    <li><NavLink to="/posts/create" className={navLinkClassName}>Create</NavLink></li>
                     <li><NavLink to="/about" className={navLinkClassName}>About</NavLink></li>
-                    <li><NavLink to="/auth/login" className={navLinkClassName}>Log in</NavLink></li>
-                    <li><NavLink to="/auth/signup" className={navLinkClassName}>Sign up</NavLink></li>
-                    <li><button onClick={logoutHandler} className={styles.link}>Logout</button></li>
+
+                    {
+                        isAuth
+                        ? <>
+                            <li><NavLink to="/posts/create" className={navLinkClassName}>Create</NavLink></li>
+                            <li><NavLink to={`/${profile.username}`} className={navLinkClassName}>Profile</NavLink></li>
+                            <li><button onClick={logoutHandler} className={styles.link}>Logout</button></li>
+                        </>
+                        : <>
+                            <li><NavLink to="/auth/login" className={navLinkClassName}>Log in</NavLink></li>
+                            <li><NavLink to="/auth/signup" className={navLinkClassName}>Sign up</NavLink></li>
+                        </>
+                    }
                 </ol>
             </nav>
         </header>
