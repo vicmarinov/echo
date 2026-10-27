@@ -17,7 +17,7 @@ export default function CurrentProfileProvider (
             const profile = await authService.getCurrentUserProfile();
             setCurrentProfile(profile);
         } catch (error) {
-            console.error('Failed to fetch profile:', error);
+            console.error('Profile refresh error:', error);
         }
     }, []);
 

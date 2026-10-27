@@ -5,7 +5,6 @@ import type { Profile, User } from '../types/models.ts';
 async function signUp (
     { email, password, name, username }: User.SignupData
 ): Promise<void> {
-    // TODO: Add error handling
     const response = await supabase.auth.signUp({
         email,
         password,
@@ -20,13 +19,11 @@ async function signUp (
 async function logIn (
     { email, password }: User.LoginData
 ): Promise<void> {
-    // TODO: Add error handling
     const response = await supabase.auth.signInWithPassword({ email, password });
     if (response.error) throw response.error;
 }
 
 async function logOut (): Promise<void> {
-    // TODO: Add error handling
     const response = await supabase.auth.signOut();
     if (response.error) throw response.error;
 }

@@ -19,9 +19,14 @@ export default function Signup () {
         errors,
         data
     } = useControlledForm(signupSchema, async (data) => {
-        await authService.signUp(data);
-        await refreshProfile();
-        navigate('/');
+        try {
+            await authService.signUp(data);
+            await refreshProfile();
+            navigate('/');
+        } catch (error) {
+            alert('Sign up failed. Please check your input and try again.');
+            console.error('Sign up error:', error);
+        }
     });
     
     return (

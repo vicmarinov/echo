@@ -8,8 +8,13 @@ export default function Header () {
     const isAuth = !!profile;
 
     const logoutHandler = async () => {
-        await authService.logOut();
-        await refreshProfile();
+        try {
+            await authService.logOut();
+            await refreshProfile();
+        } catch (error) {
+            alert('Logout failed. Please try again.');
+            console.error('Logout error:', error);
+        }
     }
 
     const navLinkClassName = ({ isActive }: { isActive: boolean }): string => {

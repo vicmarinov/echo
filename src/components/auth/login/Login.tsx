@@ -18,9 +18,14 @@ export default function Login () {
         isSubmitting,
         errors
     } = useControlledForm(loginSchema, async (data) => {
-        await authService.logIn(data);
-        await refreshProfile();
-        navigate('/');
+        try {
+            await authService.logIn(data);
+            await refreshProfile();
+            navigate('/');
+        } catch (error) {
+            alert('Login failed. Please check your credentials and try again.');
+            console.error('Login error:', error);
+        }
     });
 
     return (
