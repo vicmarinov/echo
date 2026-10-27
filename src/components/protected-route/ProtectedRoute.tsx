@@ -1,5 +1,5 @@
 import { Navigate, Outlet } from 'react-router';
-import useCurrentProfile from '../../hooks/use-current-profile.ts';
+import useCurrentProfile from '../../contexts/current-profile/use-current-profile.ts';
 
 export default function ProtectedRoute (
     { only }: { only: 'auth' | 'guest' }

@@ -6,7 +6,7 @@ import Login from './components/auth/login/Login.tsx';
 import PostDetails from './components/posts/post-details/PostDetails.tsx';
 import CreatePost from './components/posts/save-post/create-post/CreatePost.tsx';
 import EditPost from './components/posts/save-post/edit-post/EditPost.tsx';
-import { CurrentProfileProvider } from './contexts/current-profile-context.tsx';
+import CurrentProfileProvider from './contexts/current-profile/current-profile-provider.tsx';
 import ProtectedRoute from './components/protected-route/ProtectedRoute.tsx';
 
 export default function App () {

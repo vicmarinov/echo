@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import CurrentProfileContext from '../contexts/current-profile-context.tsx';
+import CurrentProfileContext from './current-profile-context.ts';
 
 export default function useCurrentProfile () {
     const context = useContext(CurrentProfileContext);

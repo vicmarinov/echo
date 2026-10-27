@@ -3,7 +3,7 @@ import useControlledForm from '../../../hooks/use-controlled-form.ts';
 import addCommentSchema from './AddComment.schema.ts';
 import commentService from '../../../services/comment-service.ts';
 import styles from './AddComment.module.css';
-import useCurrentProfile from '../../../hooks/use-current-profile.ts';
+import useCurrentProfile from '../../../contexts/current-profile/use-current-profile.ts';
 
 export default function AddComment () {
     const { postId = '' } = useParams();

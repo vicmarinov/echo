@@ -1,16 +1,10 @@
-import { createContext, useCallback, useEffect, useMemo, useState, type ReactNode } from 'react';
-import type { Profile } from '../types/models.ts';
-import authService from '../services/auth-service.ts';
+import { useCallback, useEffect, useMemo, useState, type ReactNode } from 'react';
+import type { Profile } from '../../types/models.ts';
+import authService from '../../services/auth-service.ts';
+import CurrentProfileContext from './current-profile-context.ts';
 
-type CurrentProfileContextType = {
-    profile: Profile.Data | null;
-    refreshProfile: () => Promise<void>;
-};
-
-export const CurrentProfileContext = createContext<CurrentProfileContextType | undefined>(undefined);
-
-export function CurrentProfileProvider (
-    { children }: { children: ReactNode }
+export default function CurrentProfileProvider (
+    { children }: { children: ReactNode; }
 ) {
     const [currentProfile, setCurrentProfile] = useState<Profile.Data | null>(null);
 
@@ -38,5 +32,3 @@ export function CurrentProfileProvider (
         </CurrentProfileContext.Provider>
     );
 }
-
-export default CurrentProfileContext;

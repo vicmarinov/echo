@@ -5,7 +5,7 @@ import type { Comment as CommentType } from '../../../types/models.ts';
 import AddComment from '../add-comment/AddComment.tsx';
 import Comment from '../comment/Comment.tsx';
 import styles from './CommentSection.module.css';
-import useCurrentProfile from '../../../hooks/use-current-profile.ts';
+import useCurrentProfile from '../../../contexts/current-profile/use-current-profile.ts';
 
 export default function CommentSection () {
     const { postId = '' } = useParams();

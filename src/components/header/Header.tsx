@@ -1,5 +1,5 @@
 import { Link, NavLink } from 'react-router';
-import useCurrentProfile from '../../hooks/use-current-profile.ts';
+import useCurrentProfile from '../../contexts/current-profile/use-current-profile.ts';
 import authService from '../../services/auth-service.ts';
 import styles from './Header.module.css';
 

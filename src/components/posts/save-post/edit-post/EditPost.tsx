@@ -6,7 +6,7 @@ import postService from '../../../../services/post-service.ts';
 import { Navigate, useNavigate, useParams } from 'react-router';
 import { useEffect, useState } from 'react';
 import type { Post } from '../../../../types/models.ts';
-import useCurrentProfile from '../../../../hooks/use-current-profile.ts';
+import useCurrentProfile from '../../../../contexts/current-profile/use-current-profile.ts';
 
 export default function EditPost () {
     const { postId: id = '' } = useParams();

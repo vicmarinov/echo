@@ -6,7 +6,7 @@ import Author from '../../author/Author.tsx';
 import formatDateTime from '../../../utils/formatDateTime.ts';
 import styles from './PostDetails.module.css';
 import CommentSection from '../../comments/comment-section/CommentSection.tsx';
-import useCurrentProfile from '../../../hooks/use-current-profile.ts';
+import useCurrentProfile from '../../../contexts/current-profile/use-current-profile.ts';
 
 export default function PostDetails () {
     const { postId: id = '' } = useParams();
