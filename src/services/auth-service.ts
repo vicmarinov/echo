@@ -63,11 +63,29 @@ async function getCurrentUserProfile (): Promise<Profile.Data | null> {
     return response.data.at(0)!;
 }
 
+async function getUserProfileByUsername (
+    username: Profile.Data['username'],
+    abortController: AbortController
+): Promise<Profile.WithPosts | null> {
+    const response = await supabase
+        .from('profiles')
+        .select(`*, posts ( *, author ( * ) )`)
+        .eq('username', username)
+        .abortSignal(abortController.signal);
+    
+    if (!response.success) {
+        throw response.error;
+    }
+
+    return response.data.at(0) ?? null;
+}
+
 const authService = {
     signUp,
     logIn,
     logOut,
-    getCurrentUserProfile
+    getCurrentUserProfile,
+    getUserProfileByUsername
 };
 
 export default authService;

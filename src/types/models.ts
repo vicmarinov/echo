@@ -12,6 +12,7 @@ export namespace User {
 
 export namespace Profile {
     export type Data = Database['public']['Tables']['profiles']['Row'];
+    export type WithPosts = Database['public']['Tables']['profiles']['Row'] & { posts: Post.WithAuthor[] };
     export type AddData = Database['public']['Tables']['profiles']['Insert'];
 };
 
