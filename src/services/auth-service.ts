@@ -19,7 +19,9 @@ async function signUp (
 async function logIn (
     { email, password }: User.LoginData
 ): Promise<void> {
-    const response = await supabase.auth.signInWithPassword({ email, password });
+    const response = await supabase.auth
+        .signInWithPassword({ email, password });
+    
     if (response.error) throw response.error;
 }
 
