@@ -18,11 +18,16 @@ export default function AddComment () {
         isSubmitting,
         errors
     } = useControlledForm(addCommentSchema, async (data) => {
-        const addedComment = await commentService
-            .create({ post_id: postId, text: data.text });
-        
-        dispatch({ type: 'ADD_COMMENT', payload: addedComment });
-        navigate(`/posts/${postId}`);
+        try {
+            const addedComment = await commentService
+                .create({ post_id: postId, text: data.text });
+            
+            dispatch({ type: 'ADD_COMMENT', payload: addedComment });
+            navigate(`/posts/${postId}`);
+        } catch (error) {
+            alert('Failed to add comment. Please try again.');
+            console.error('Add comment error:', error);
+        }
     });
 
     const { profile } = useCurrentProfile();

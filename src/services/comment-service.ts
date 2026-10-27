@@ -12,9 +12,10 @@ async function getAllByPostId (
         .order('created_at', { ascending: false })
         .abortSignal(abortController.signal);
     
-    // TODO: Add error handling
-    if (!response.success) throw response.error;
-    
+    if (!response.success) {
+        throw response.error;
+    }
+
     return response.data;
 }
 
@@ -26,8 +27,9 @@ async function create (
         .insert({ post_id: postId, text })
         .select(`*, author ( * )`);
     
-    // TODO: Add error handling
-    if (!response.success) throw response.error;
+    if (!response.success) {
+        throw response.error;
+    }
 
     const createdComment = response.data.at(0)!;
     return createdComment;

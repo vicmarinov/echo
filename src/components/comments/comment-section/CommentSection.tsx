@@ -13,8 +13,6 @@ export default function CommentSection () {
     const { comments, dispatch } = useComments();
 
     useEffect(() => {
-        // TODO: Add error handling
-
         const abortController = new AbortController();
 
         commentService
@@ -23,7 +21,10 @@ export default function CommentSection () {
                 type: 'SET_COMMENTS',
                 payload: comments
             }))
-            .catch(() => console.error('SERVICE ERROR: Failed to fetch comments'))
+            .catch((error) => {
+                alert('Failed to fetch comments. Please try again later.');
+                console.error('Comments fetch error:', error);
+            })
         
         return () => abortController.abort();
     }, [postId]);
