@@ -1,5 +1,7 @@
 # Echo - Functional Guide
 
+[Deployed version](https://echo.vicmarinov.workers.dev)
+
 ## 1. Project Overview
 - **Application Name:** Echo
 - **Application Category / Topic:** Microblogging Social Network Service
