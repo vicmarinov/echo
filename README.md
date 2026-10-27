@@ -1,6 +1,6 @@
 # Echo - Functional Guide
 
-[Deployed version](https://echo.vicmarinov.workers.dev)
+A fully functional, deployed version of this application is available at [echo.vicmarinov.workers.dev](https://echo.vicmarinov.workers.dev).
 
 ## 1. Project Overview
 - **Application Name:** Echo
@@ -75,64 +75,65 @@
 ### Details Page
 
 - **Navigation trigger:** Clicking a post card triggers navigation via React Router's or `useNavigate` to `/posts/:postId`.
-- **Route parameters:** Extracts `postId` via `useParams()` to fetch the specific post and its associated comments.
+- **Route parameters:** Extracts `:postId` via `useParams()` to fetch the specific post and its associated comments.
 
 ## 6. Data Source & Backend
-* **Backend Type:** Real Backend-as-a-Service (**Supabase** – PostgreSQL database + Supabase Auth).
 
----
+* **Backend Type:** Real Backend-as-a-Service (**Supabase** – PostgreSQL database + Supabase Auth).
 
 ## 7. Data Operations (CRUD)
 
-* **Create (POST):** Authenticated users submit the `CreatePost` or `AddComment` form, calling `postService.create()` or `commentService.create()` to insert records into Supabase.
-* **Read (GET):** Fetched on component mount in `AllPosts`, `PostDetails`, `Profile`, and `CommentSection` using `post-service.ts` and `comment-service.ts`.
-* **Update (PUT/PATCH):** Post authors edit records via `EditPost.tsx` (`postService.update()`). Upon success, the user is navigated back to the updated `/posts/:id` view.
-* **Delete (DELETE):** Authors trigger deletion on `PostDetails` or `Comment` components. Post deletion redirects to `/`; comment deletion dispatches a remove action to `comments-reducer.ts` for instant UI update.
-
----
+- **Create:** Authenticated users submit the `CreatePost` or `AddComment` form, calling `postService.create()` or `commentService.create()` to insert records into Supabase.
+- **Read:** Fetched on component mount in `AllPosts`, `PostDetails`, `Profile`, and `CommentSection` using `post-service.ts`, `comment-service.ts` and `auth-service.ts`.
+- **Update:** Post authors edit records via `EditPost.tsx` (`postService.update()`). Upon success, the user is navigated back to the updated `/posts/:postId` view.
+- **Delete:** Authors trigger deletion on `PostDetails` component. Post deletion redirects to `/`.
 
 ## 8. Forms & Validation
 
 ### Forms Used
+
 1. **Login Form** (`Login.tsx`)
 2. **Signup Form** (`Signup.tsx`)
 3. **Create Post Form** (`CreatePost.tsx`)
 4. **Edit Post Form** (`EditPost.tsx`)
 5. **Add Comment Form** (`AddComment.tsx`)
 
-### Validation Rules (Schema-based via `*.schema.ts` & `useControlledForm`)
-* **`email` (Login / Signup):** Required; must match a valid email format.
-* **`content` (Comment / Post):** Required; trimmed string with minimum and maximum character length constraints.
-* **`password` / `title` (Multiple rules):** Required, minimum length requirement, maximum length / character format validation (plus password confirmation match in `Signup.schema.ts`).
+### Validation Rules
 
----
+Validation is schema-based via `*.schema.ts` with `@zod/mini` and the custom `useControlledForm` hook.
+
+Examples:
+1. **`email` in login and signup forms:** required, must match a valid email format.
+2. **`text` in post and comment creation forms:** required, maximum character length constraint.
+* **`password` in the signup form:** required, minimum length requirement, character format validation.
 
 ## 9. React-Specific Techniques
 
 ### Hooks & Component Lifecycle
-* **Standard Hooks:** `useState`, `useEffect`, `useContext`, `useReducer` (in `comments-reducer.ts`), `useParams`, `useNavigate`.
-* **Custom Hooks:** `useControlledForm` (form state & validation), `useCurrentProfile`, `useComments`.
-* **Lifecycle Example:** `PostDetails` fetches post data on **mount** via `useEffect`, re-fetches if the `:id` parameter **updates**, and cleans up pending states/listeners on **unmount**.
+
+- **Standard Hooks:** `useState`, `useEffect`, `useContext`, `useReducer`, `useParams`, `useNavigate`.
+- **Custom Hooks:** `useControlledForm` for form state & validation, `useCurrentProfile` and `useComments` for accessing context.
+* **Lifecycle Example:** `PostDetails` fetches post data on **mount** via `useEffect`, re-fetches if the `:postId` parameter **updates**, and aborts the fetching on **unmount**.
 
 ### Context API
-* **`CurrentProfileContext`:** Shares the authenticated user's profile and auth status across `Header`, `ProtectedRoute`, `PostDetails`, `Profile`, and `Comment`.
-* **`CommentsContext`:** Manages the state and CRUD actions (via reducer) for the comment list inside `PostDetails`, consumed by `CommentSection`, `AddComment`, and `Comment`.
+
+- **`CurrentProfileContext`:** Shares the authenticated user's profile across `Header`, `ProtectedRoute`, `PostDetails`, and `AddComment`.
+- **`CommentsContext`:** Manages the state and actions (via reducer) for the comment list inside `PostDetails`, consumed by `CommentSection`, `AddComment`, and `Comment`.
 
 ### Component Styling
-* **CSS Modules** (`*.module.css`) combined with global CSS variables (`variables.css`, `global.css`, `form.module.css`) for scoped, modular styling.
 
----
+Component styling is maintained through **CSS Modules** (`*.module.css`) combined with several global CSS stylesheets (`variables.css`, `global.css`, `form.module.css`) for scoped and modular styling.
 
 ## 10. Typical User Flow
+
 1. **Register / Log In:** A guest visits the site, navigates to `/signup` or `/login`, and authenticates.
 2. **Browse Feed:** Redirected to `/`, the user scrolls through recent community posts.
-3. **Engage:** The user clicks a post to view `/posts/:id` and submits a comment via `AddComment`.
-4. **Publish & Manage:** The user creates a new post at `/posts/create`, views it on their profile (`/profile/:id`), and edits or deletes it as needed.
-
----
+3. **Engage:** The user clicks a post to view `/posts/:postId` and submits a comment via `AddComment`.
+4. **Publish & Manage:** The user creates a new post at `/posts/create`, views it on their own profile (`/profile/:username`), and edits or deletes it as needed.
 
 ## 11. Error & Edge Case Handling
-* **Authentication Errors:** Invalid login/signup credentials or unauthorized route attempts display inline error messages and trigger route guard redirects.
+
+- **Authentication Errors:** Invalid login/signup credentials or unauthorized route attempts display inline error messages and trigger route guard redirects.
 * **Network / Data Errors:** `try/catch` blocks around Supabase service calls capture API errors and display user-friendly error alerts.
 * **Empty / Missing States:** Displays fallback messages when a feed, profile, or comment section has no items, or when a requested post ID does not exist.
 
@@ -145,8 +146,9 @@
 npm install
 
 # 2. Configure environment variables (.env)
-VITE_SUPABASE_URL=your_supabase_url
-VITE_SUPABASE_ANON_KEY=your_supabase_anon_key
+SUPABASE_PROJECT_ID="your-project-id"
+VITE_SUPABASE_URL="https://your-project-id.supabase.co"
+VITE_SUPABASE_KEY="your-publishable-key"
 
 # 3. Run development server
 npm run dev
