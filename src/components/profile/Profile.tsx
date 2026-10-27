@@ -44,7 +44,9 @@ export default function Profile () {
                     </header>
                     
                     <section className={styles['posts-list']}>{
-                        profile.posts.map(postData => <Post key={postData.id} {...postData} />)
+                        profile.posts.length > 0
+                            ? profile.posts.map(postData => <Post key={postData.id} {...postData} />)
+                            : <p className={styles.message}>{profile.name} has no posts to display.</p>
                     }</section>
                 </>
             )
