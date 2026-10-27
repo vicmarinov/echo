@@ -15,13 +15,14 @@ export default function PostDetails () {
     const [data, setData] = useState<Post.WithAuthor | null>();
 
     useEffect(() => {
-        // TODO: Add error handling
-
         const abortController = new AbortController();
 
         postService.getById(id, abortController)
             .then(setData)
-            .catch(() => console.error('SERVICE ERROR: Failed to fetch post'));
+            .catch((error) => {
+                alert('Failed to fetch post. Please try again later.');
+                console.error('Post fetch error:', error);
+            });
         
         return () => abortController.abort();
     }, [id]);
@@ -40,8 +41,13 @@ export default function PostDetails () {
         const isConfirmed = confirm('Are you sure you want to delete this post?');
         if (!isConfirmed) return;
         
-        await postService.remove(id);
-        navigate('/');
+        try {
+            await postService.remove(id);
+            navigate('/');
+        } catch (error) {
+            alert('Failed to delete post. Please try again later.');
+            console.error('Post delete error:', error);
+        }
     }
 
     return (

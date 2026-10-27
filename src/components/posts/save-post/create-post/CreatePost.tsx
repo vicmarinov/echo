@@ -15,8 +15,13 @@ export default function CreatePost () {
         isSubmitting,
         errors
     } = useControlledForm(createPostSchema, async (data) => {
-        const createdPostId: string = await postService.create(data);
-        navigate(`/posts/${createdPostId}`);
+        try {
+            const createdPostId: string = await postService.create(data);
+            navigate(`/posts/${createdPostId}`);
+        } catch (error) {
+            alert('Failed to create post. Please try again later.');
+            console.error('Post create error:', error);
+        }
     });
     
     return (

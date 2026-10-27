@@ -14,13 +14,14 @@ export default function EditPost () {
     const [initialData, setInitialData] = useState<Post.WithAuthor | null>();
 
     useEffect(() => {
-        // TODO: Add error handling
-
         const abortController = new AbortController();
 
         postService.getById(id, abortController)
             .then(setInitialData)
-            .catch(() => console.error('SERVICE ERROR: Failed to fetch post'));
+            .catch((error) => {
+                alert('Failed to fetch post. Please try again later.');
+                console.error('Post fetch error:', error);
+            });
 
         return () => abortController.abort();
     }, [id]);
@@ -51,9 +52,14 @@ function EditPostForm ({ initialData }: { initialData : Post.WithAuthor }) {
         isSubmitting,
         errors
     } = useControlledForm(getEditPostSchema(initialData), async (data) => {
-        const postId = initialData.id;
-        await postService.edit(postId, data);
-        navigate(`/posts/${postId}`);
+        try {
+            const postId = initialData.id;
+            await postService.edit(postId, data);
+            navigate(`/posts/${postId}`);
+        } catch (error) {
+            alert('Failed to edit post. Please try again later.');
+            console.error('Post edit error:', error);
+        }
     });
     
     return (

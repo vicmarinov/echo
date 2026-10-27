@@ -8,13 +8,14 @@ export default function AllPosts () {
     const [posts, setPosts] = useState<PostTypes.WithAuthor[]>();
 
     useEffect(() => {
-        // TODO: Add real error handling
-
         const abortController = new AbortController();
 
         postService.getAll(abortController)
             .then(setPosts)
-            .catch(() => console.error('SERVICE ERROR: Failed to fetch posts'));
+            .catch((error) => {
+                alert('Failed to fetch posts. Please try again later.');
+                console.error('Posts fetch error:', error);
+            });
         
         return () => abortController.abort();
     }, []);

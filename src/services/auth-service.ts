@@ -13,7 +13,9 @@ async function signUp (
         }
     });
 
-    if (response.error) throw response.error;
+    if (response.error) {
+        throw response.error;
+    }
 }
 
 async function logIn (
@@ -22,7 +24,9 @@ async function logIn (
     const response = await supabase.auth
         .signInWithPassword({ email, password });
     
-    if (response.error) throw response.error;
+    if (response.error) {
+        throw response.error;
+    }
 }
 
 async function logOut (): Promise<void> {
@@ -35,7 +39,9 @@ async function getCurrentUser (): Promise<SupabaseUser | null> {
 
     if (response.error instanceof AuthSessionMissingError) {
         return null;
-    } else if (response.error) throw response.error;
+    } else if (response.error) {
+        throw response.error;
+    }
 
     return response.data.user;
 }
@@ -50,7 +56,9 @@ async function getCurrentUserProfile (): Promise<Profile.Data | null> {
         .select()
         .eq('user_id', currentUser.id);
     
-    if (!response.success) throw response.error;
+    if (!response.success) {
+        throw response.error;
+    }
     
     return response.data.at(0)!;
 }

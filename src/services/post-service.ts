@@ -10,8 +10,9 @@ async function getAll (
         .order('created_at', { ascending: false })
         .abortSignal(abortController.signal);
     
-    // TODO: Add error handling
-    if (!response.success) throw response.error;
+    if (!response.success) {
+        throw response.error;
+    }
 
     return response.data;
 }
@@ -26,8 +27,9 @@ async function getById (
         .eq('id', postId)
         .abortSignal(abortController.signal);
     
-    // TODO: Add error handling
-    if (!response.success) throw response.error;
+    if (!response.success) {
+        throw response.error;
+    }
 
     const postData = response.data;
     return postData.at(0) ?? null;
@@ -41,10 +43,11 @@ async function create (
         .insert({ text })
         .select();
 
-    // TODO: Add error handling
-    if (!response.success) throw response.error;
+    if (!response.success) {
+        throw response.error;
+    }
 
-    const createdPost = response.data.at(0) as Post.Data;
+    const createdPost = response.data.at(0)!;
     return createdPost.id;
 }
 
@@ -57,8 +60,9 @@ async function edit (
         .update({ text })
         .eq('id', postId);
     
-    // TODO: Add error handling
-    if (!response.success) throw response.error;
+    if (!response.success) {
+        throw response.error;
+    }
 }
 
 async function remove (
@@ -68,8 +72,9 @@ async function remove (
         .from('posts')
         .delete().eq('id', postId);
 
-    // TODO: Add error handling
-    if (!response.success) throw response.error;
+    if (!response.success) {
+        throw response.error;
+    }
 }
 
 const postService = {
