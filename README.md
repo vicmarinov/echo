@@ -3,9 +3,10 @@
 A fully functional, deployed version of this application is available at [echo.vicmarinov.workers.dev](https://echo.vicmarinov.workers.dev).
 
 ## 1. Project Overview
+
 - **Application Name:** Echo
 - **Application Category / Topic:** Microblogging Social Network Service
-* **Main Purpose:** Echo is a minimalist social platform designed for sharing posts and engaging in community discussions. It enables users to publish content, interact through comments, and manage their personal profile in a clean, distraction-free environment.
+- **Main Purpose:** Echo is a minimalist social platform designed for sharing posts and engaging in community discussions. It enables users to publish content, interact through comments, and manage their personal profile in a clean, distraction-free environment.
 
 ## 2. User Access & Permissions
 
@@ -79,7 +80,7 @@ A fully functional, deployed version of this application is available at [echo.v
 
 ## 6. Data Source & Backend
 
-* **Backend Type:** Real Backend-as-a-Service (**Supabase** – PostgreSQL database + Supabase Auth).
+- **Backend Type:** Real Backend-as-a-Service (**Supabase** – PostgreSQL database + Supabase Auth).
 
 ## 7. Data Operations (CRUD)
 
@@ -105,7 +106,7 @@ Validation is schema-based via `*.schema.ts` with `@zod/mini` and the custom `us
 Examples:
 1. **`email` in login and signup forms:** required, must match a valid email format.
 2. **`text` in post and comment creation forms:** required, maximum character length constraint.
-* **`password` in the signup form:** required, minimum length requirement, character format validation.
+3. **`password` in the signup form:** required, minimum length requirement, character format validation.
 
 ## 9. React-Specific Techniques
 
@@ -113,7 +114,7 @@ Examples:
 
 - **Standard Hooks:** `useState`, `useEffect`, `useContext`, `useReducer`, `useParams`, `useNavigate`.
 - **Custom Hooks:** `useControlledForm` for form state & validation, `useCurrentProfile` and `useComments` for accessing context.
-* **Lifecycle Example:** `PostDetails` fetches post data on **mount** via `useEffect`, re-fetches if the `:postId` parameter **updates**, and aborts the fetching on **unmount**.
+- **Lifecycle Example:** `PostDetails` fetches post data on **mount** via `useEffect`, re-fetches if the `:postId` parameter **updates**, and aborts the fetching on **unmount**.
 
 ### Context API
 
@@ -134,8 +135,8 @@ Component styling is maintained through **CSS Modules** (`*.module.css`) combine
 ## 11. Error & Edge Case Handling
 
 - **Authentication Errors:** Invalid login/signup credentials or unauthorized route attempts display inline error messages and trigger route guard redirects.
-* **Network / Data Errors:** `try/catch` blocks around Supabase service calls capture API errors and display user-friendly error alerts.
-* **Empty / Missing States:** Displays fallback messages when a feed, profile, or comment section has no items, or when a requested post ID does not exist.
+- **Network / Data Errors:** `try/catch` blocks around Supabase service calls capture API errors and display user-friendly error alerts.
+- **Empty / Missing States:** Displays fallback messages when a feed, profile, or comment section has no items, or when a requested post ID does not exist.
 
 ---
 

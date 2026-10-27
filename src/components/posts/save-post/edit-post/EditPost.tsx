@@ -3,12 +3,12 @@ import getEditPostSchema from './EditPost.schema.ts';
 import formStyles from '../../../../styles/form.module.css';
 import styles from '../SavePost.module.css';
 import postService from '../../../../services/post-service.ts';
-import { Navigate, useNavigate, useParams } from 'react-router';
+import { useNavigate, useParams } from 'react-router';
 import { useEffect, useState } from 'react';
 import type { Post } from '../../../../types/models.ts';
-import useCurrentProfile from '../../../../contexts/current-profile/use-current-profile.ts';
 
 export default function EditPost () {
+    console.log('aaaa');
     const { postId: id = '' } = useParams();
 
     const [initialData, setInitialData] = useState<Post.WithAuthor | null>();
@@ -29,11 +29,6 @@ export default function EditPost () {
 
         return () => abortController.abort();
     }, [id]);
-
-    const { profile } = useCurrentProfile();
-    const isAuth = !!profile;
-    const isOwner = isAuth && initialData?.author.username === profile.username;
-    if (!isOwner) return <Navigate to={`/posts/${id}`} />;
 
     return (
         <main className={styles['save-post']}>{
