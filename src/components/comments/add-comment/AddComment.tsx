@@ -4,7 +4,7 @@ import addCommentSchema from './AddComment.schema.ts';
 import commentService from '../../../services/comment-service.ts';
 import styles from './AddComment.module.css';
 import useCurrentProfile from '../../../contexts/current-profile/use-current-profile.ts';
-import useComments from '../../../contexts/comments-context/use-comments.ts';
+import useComments from '../../../contexts/comments/use-comments.ts';
 
 export default function AddComment () {
     const { postId = '' } = useParams();

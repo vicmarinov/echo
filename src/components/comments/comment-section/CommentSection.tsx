@@ -4,7 +4,7 @@ import commentService from '../../../services/comment-service.ts';
 import AddComment from '../add-comment/AddComment.tsx';
 import Comment from '../comment/Comment.tsx';
 import useCurrentProfile from '../../../contexts/current-profile/use-current-profile.ts';
-import useComments from '../../../contexts/comments-context/use-comments.ts';
+import useComments from '../../../contexts/comments/use-comments.ts';
 import styles from './CommentSection.module.css';
 
 export default function CommentSection () {
