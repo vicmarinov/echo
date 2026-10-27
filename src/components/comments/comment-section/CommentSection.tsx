@@ -22,8 +22,12 @@ export default function CommentSection () {
                 payload: comments
             }))
             .catch((error) => {
-                alert('Failed to fetch comments. Please try again later.');
-                console.error('Comments fetch error:', error);
+                if (error.message.startsWith('AbortError')) {
+                    console.log('Comments fetch was aborted.');
+                } else {
+                    alert('Failed to fetch comments. Please try again later.');
+                    console.error('Comments fetch error:', error);
+                }
             })
         
         return () => abortController.abort();

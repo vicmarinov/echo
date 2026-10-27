@@ -19,8 +19,12 @@ export default function EditPost () {
         postService.getById(id, abortController)
             .then(setInitialData)
             .catch((error) => {
-                alert('Failed to fetch post. Please try again later.');
-                console.error('Post fetch error:', error);
+                if (error.message.startsWith('AbortError')) {
+                    console.log('Post fetch was aborted.');
+                } else {
+                    alert('Failed to fetch post. Please try again later.');
+                    console.error('Post fetch error:', error);
+                }
             });
 
         return () => abortController.abort();

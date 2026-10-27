@@ -13,8 +13,12 @@ export default function AllPosts () {
         postService.getAll(abortController)
             .then(setPosts)
             .catch((error) => {
-                alert('Failed to fetch posts. Please try again later.');
-                console.error('Posts fetch error:', error);
+                if (error.message.startsWith('AbortError')) {
+                    console.log('Posts fetch was aborted.');
+                } else {
+                    alert('Failed to fetch posts. Please try again later.');
+                    console.error('Posts fetch error:', error);
+                }
             });
         
         return () => abortController.abort();
