@@ -71,13 +71,22 @@ async function getUserProfileByUsername (
         .from('profiles')
         .select(`*, posts ( *, author ( * ) )`)
         .eq('username', username)
-        .abortSignal(abortController.signal);
+        .abortSignal(abortController.signal)
+        .single();
     
     if (!response.success) {
         throw response.error;
     }
 
-    return response.data.at(0) ?? null;
+    const profileData = response.data;
+    profileData.posts
+        .sort((a, b) => {
+            const dateA = new Date(a.created_at);
+            const dateB = new Date(b.created_at);
+            return dateB.getTime() - dateA.getTime();
+        });
+
+    return profileData;
 }
 
 const authService = {

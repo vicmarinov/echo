@@ -38,9 +38,7 @@ export default function PostDetails () {
     const navigate = useNavigate();
 
     const deleteHandler = async () => {
-        if (!isOwner) {
-            return navigate(`/posts/${id}`);
-        };
+        if (!isOwner) return;
 
         const isConfirmed = confirm('Are you sure you want to delete this post?');
         if (!isConfirmed) return;
