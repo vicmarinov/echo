@@ -9,6 +9,7 @@ import EditPost from './components/posts/save-post/edit-post/EditPost.tsx';
 import CurrentProfileProvider from './contexts/current-profile/current-profile-provider.tsx';
 import ProtectedRoute from './components/protected-route/ProtectedRoute.tsx';
 import Profile from './components/profile/Profile.tsx';
+import About from './components/about/About.tsx';
 
 export default function App () {
     return (
@@ -17,10 +18,8 @@ export default function App () {
             
             <Routes>
                 <Route path='/' element={<Navigate to='/posts' />} />
+                <Route path='/about' element={<About />} />
                 <Route path='/:username' element={<Profile />} />
-
-                {/* TODO: Implement the following route and its corresponding component */}
-                <Route path='/about' element={<p>About: To be implemented...</p>} />
 
                 <Route path="/posts" element={<AllPosts />} />
                 <Route path='/posts/:postId' element={<PostDetails />} />

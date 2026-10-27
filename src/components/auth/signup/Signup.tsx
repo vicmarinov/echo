@@ -78,7 +78,6 @@ export default function Signup () {
                         {errors.isMinAge && <p className={formStyles['error-message']}>{errors.isMinAge.join(' ')}</p>}
                     </div>
                     
-                    {/* TODO: Add link to the Terms and Conditions page */}
                     <div className={formStyles.field}>
                         <input className={formStyles.input} id="agreeTerms" {...fieldsProps.agreeTerms} />
                         <label className={formStyles.label} htmlFor="agreeTerms">I agree to the <Link to="/about">Terms and Conditions</Link>.</label>
