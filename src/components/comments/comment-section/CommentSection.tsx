@@ -1,16 +1,16 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useParams } from 'react-router';
 import commentService from '../../../services/comment-service.ts';
-import type { Comment as CommentType } from '../../../types/models.ts';
 import AddComment from '../add-comment/AddComment.tsx';
 import Comment from '../comment/Comment.tsx';
-import styles from './CommentSection.module.css';
 import useCurrentProfile from '../../../contexts/current-profile/use-current-profile.ts';
+import useComments from '../../../contexts/comments-context/use-comments.ts';
+import styles from './CommentSection.module.css';
 
 export default function CommentSection () {
     const { postId = '' } = useParams();
-    
-    const [comments, setComments] = useState<CommentType.WithAuthor[]>();
+
+    const { comments, dispatch } = useComments();
 
     useEffect(() => {
         // TODO: Add error handling
@@ -19,7 +19,10 @@ export default function CommentSection () {
 
         commentService
             .getAllByPostId(postId, abortController)
-            .then(setComments)
+            .then(comments => dispatch({
+                type: 'SET_COMMENTS',
+                payload: comments
+            }))
             .catch(() => console.error('SERVICE ERROR: Failed to fetch comments'))
         
         return () => abortController.abort();

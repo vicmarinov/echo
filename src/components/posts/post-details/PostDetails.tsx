@@ -7,6 +7,7 @@ import formatDateTime from '../../../utils/formatDateTime.ts';
 import styles from './PostDetails.module.css';
 import CommentSection from '../../comments/comment-section/CommentSection.tsx';
 import useCurrentProfile from '../../../contexts/current-profile/use-current-profile.ts';
+import CommentsProvider from '../../../contexts/comments-context/comments-provider.tsx';
 
 export default function PostDetails () {
     const { postId: id = '' } = useParams();
@@ -75,7 +76,9 @@ export default function PostDetails () {
                         </section>
                     )}
                     
-                    <CommentSection/>
+                    <CommentsProvider>
+                        <CommentSection/>
+                    </CommentsProvider>
                 </section>
             </div>    
             )
