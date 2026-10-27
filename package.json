@@ -7,8 +7,9 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
-    "preview": "vite preview",
-    "update-types": "set -a; [ -f .env ] && source .env; [ -f .env.local ] && source .env.local; set +a; supabase gen types typescript --project-id \"$SUPABASE_PROJECT_ID\" > src/types/database.types.ts"
+    "preview": "npm run build && wrangler dev",
+    "update-types": "set -a; [ -f .env ] && source .env; [ -f .env.local ] && source .env.local; set +a; supabase gen types typescript --project-id \"$SUPABASE_PROJECT_ID\" > src/types/database.types.ts",
+    "deploy": "npm run build && wrangler deploy"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.117.3",
@@ -19,6 +20,7 @@
     "zod": "^4.6.7"
   },
   "devDependencies": {
+    "@cloudflare/vite-plugin": "^1.65.0",
     "@eslint/js": "^10.0.1",
     "@types/node": "^24.13.3",
     "@types/react": "^19.2.18",
@@ -31,6 +33,7 @@
     "supabase": "^2.120.0",
     "typescript": "~6.0.2",
     "typescript-eslint": "^8.69.0",
-    "vite": "^8.3.0"
+    "vite": "^8.3.0",
+    "wrangler": "^4.153.0"
   }
 }
