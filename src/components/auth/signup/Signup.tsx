@@ -20,6 +20,11 @@ export default function Signup () {
         data
     } = useControlledForm(signupSchema, async (data) => {
         try {
+            if (data.password !== data.repeatPassword) {
+                alert('Passwords do not match.');
+                return;
+            }
+
             await authService.signUp(data);
             await refreshProfile();
             navigate('/');

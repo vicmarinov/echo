@@ -25,14 +25,14 @@ async function create (
     const response = await supabase
         .from('comments')
         .insert({ post_id: postId, text })
-        .select(`*, author ( * )`);
+        .select(`*, author ( * )`)
+        .single();
     
     if (!response.success) {
         throw response.error;
     }
 
-    const createdComment = response.data.at(0)!;
-    return createdComment;
+    return response.data;
 }
 
 const commentService = {

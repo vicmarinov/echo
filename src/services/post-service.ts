@@ -41,14 +41,14 @@ async function create (
     const response = await supabase
         .from('posts')
         .insert({ text })
-        .select();
+        .select()
+        .single();
 
     if (!response.success) {
         throw response.error;
     }
 
-    const createdPost = response.data.at(0)!;
-    return createdPost.id;
+    return response.data.id;
 }
 
 async function edit (

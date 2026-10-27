@@ -48,7 +48,7 @@ export default function useControlledForm<T extends Record<string, Types.FieldTy
     const submitHandler = async (event: SubmitEvent<HTMLFormElement>) => {
         event.preventDefault();
 
-        makeDirtyFields(true);
+        setDirtyFields(makeDirtyFields(true));
 
         const hasFoundErrors = !!Object.keys(validate(true)).length;
         if (hasFoundErrors) return;

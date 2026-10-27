@@ -14,8 +14,10 @@ A fully functional, deployed version of this application is available at [echo.v
 
 - **Available pages / routes:**
     - Home (`/`)
-    - Login (`/login`)
-    - Sign Up (`/signup`)
+    - About (`/about`)
+    - Login (`/auth/login`)
+    - Sign Up (`/auth/signup`)
+    - Post Feed (`/posts`)
     - Post Details (`/posts/:postId`)
     - Other Users' Profiles (`/:username`)
 - **Public data shown:** Feed of all published posts, post details, author information, and post comments (read-only).
@@ -49,14 +51,15 @@ A fully functional, deployed version of this application is available at [echo.v
 
 ### Route Guards Logic
 
-**`ProtectedRoute.tsx`** restricts access based on authentication state. Unauthenticated users trying to access private routes (Create or Edit) are redirected to `/login`. Authenticated users trying to access `/login` or `/signup` are redirected to `/`.
+**`ProtectedRoute.tsx`** restricts access based on authentication state. Unauthenticated users trying to access private routes (Create or Edit) are redirected to `/auth/login`. Authenticated users trying to access `/auth/login` or `/auth/signup` are redirected to `/`.
 
 ### Main Routes
 
-1. `/` – Public catalog of posts.
-2. `/login` – Guest-only login form.
-3. `/signup` – Guest-only registration form.
+1. `/` – Redirects to `/posts`.
+2. `/auth/login` – Guest-only login form.
+3. `/auth/signup` – Guest-only registration form.
 4. `/posts/create` – Private route for creating a post.
+5. `/posts` – Public feed (catalog) of posts
 5. `/posts/:postId` – Public details & comment section.
 6. `/posts/:postId/edit` – Private route for post owners.
 7. `/:username` – User profile and their published posts.
@@ -75,7 +78,7 @@ A fully functional, deployed version of this application is available at [echo.v
 
 ### Details Page
 
-- **Navigation trigger:** Clicking a post card triggers navigation via React Router's or `useNavigate` to `/posts/:postId`.
+- **Navigation trigger:** Clicking a post card triggers navigation via React Router's `Link` to `/posts/:postId`.
 - **Route parameters:** Extracts `:postId` via `useParams()` to fetch the specific post and its associated comments.
 
 ## 6. Data Source & Backend
@@ -127,10 +130,10 @@ Component styling is maintained through **CSS Modules** (`*.module.css`) combine
 
 ## 10. Typical User Flow
 
-1. **Register / Log In:** A guest visits the site, navigates to `/signup` or `/login`, and authenticates.
+1. **Register / Log In:** A guest visits the site, navigates to `/auth/signup` or `/auth/login`, and authenticates.
 2. **Browse Feed:** Redirected to `/`, the user scrolls through recent community posts.
 3. **Engage:** The user clicks a post to view `/posts/:postId` and submits a comment via `AddComment`.
-4. **Publish & Manage:** The user creates a new post at `/posts/create`, views it on their own profile (`/profile/:username`), and edits or deletes it as needed.
+4. **Publish & Manage:** The user creates a new post at `/posts/create`, views it on their own profile (`/:username`), and edits or deletes it as needed.
 
 ## 11. Error & Edge Case Handling
 

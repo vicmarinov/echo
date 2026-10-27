@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Link, Navigate, useNavigate, useParams } from 'react-router';
+import { Link, useNavigate, useParams } from 'react-router';
 import postService from '../../../services/post-service.ts';
 import type { Post } from '../../../types/models.ts';
 import Author from '../../author/Author.tsx';
@@ -39,8 +39,8 @@ export default function PostDetails () {
 
     const deleteHandler = async () => {
         if (!isOwner) {
-            return <Navigate to={`/posts/${id}`} />;
-        }
+            return navigate(`/posts/${id}`);
+        };
 
         const isConfirmed = confirm('Are you sure you want to delete this post?');
         if (!isConfirmed) return;

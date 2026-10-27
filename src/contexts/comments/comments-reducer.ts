@@ -15,7 +15,7 @@ export default function commentsReducer (
             return payload;
 
         case 'ADD_COMMENT':
-            return [...(state ?? []), payload];
+            return [payload, ...(state ?? [])];
 
         default:
             return state;

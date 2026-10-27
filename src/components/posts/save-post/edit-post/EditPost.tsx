@@ -8,7 +8,6 @@ import { useEffect, useState } from 'react';
 import type { Post } from '../../../../types/models.ts';
 
 export default function EditPost () {
-    console.log('aaaa');
     const { postId: id = '' } = useParams();
 
     const [initialData, setInitialData] = useState<Post.WithAuthor | null>();
