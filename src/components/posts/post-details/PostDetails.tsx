@@ -3,7 +3,7 @@ import { Link, Navigate, useNavigate, useParams } from 'react-router';
 import postService from '../../../services/post-service.ts';
 import type { Post } from '../../../types/models.ts';
 import Author from '../../author/Author.tsx';
-import formatDateTime from '../../../utils/formatDateTime.ts';
+import formatDateTime from '../../../utils/format-date-time.ts';
 import styles from './PostDetails.module.css';
 import CommentSection from '../../comments/comment-section/CommentSection.tsx';
 import useCurrentProfile from '../../../contexts/current-profile/use-current-profile.ts';
