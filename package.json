@@ -1,7 +1,18 @@
 {
   "name": "echo",
+  "description": "Echo Microblogging Service",
+  "author": "Victor Marinov",
+  "homepage": "https://github.com/vicmarinov/echo#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vicmarinov/echo.git"
+  },
+  "bugs": {
+    "url": "https://github.com/vicmarinov/echo/issues"
+  },
+  "license": "MIT",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
