@@ -1,4 +1,4 @@
-# Echo - Functional Guide
+# Functional Guide
 
 A fully functional, deployed version of this application is available at [echo.vicmarinov.workers.dev](https://echo.vicmarinov.workers.dev).
 
@@ -79,7 +79,7 @@ A fully functional, deployed version of this application is available at [echo.v
 
 ### Details Page
 
-- **Navigation trigger:** Clicking a post card triggers navigation via React Router's `Link` to `/posts/:postId`.
+- **Navigation trigger:** Clicking a post card triggers navigation via React Router's `useNavigate` to `/posts/:postId`.
 - **Route parameters:** Extracts `:postId` via `useParams()` to fetch the specific post and its associated comments.
 
 ## 6. Data Source & Backend
@@ -91,7 +91,7 @@ A fully functional, deployed version of this application is available at [echo.v
 - **Create:** Authenticated users submit the `CreatePost` or `AddComment` form, calling `postService.create()` or `commentService.create()` to insert records into Supabase.
 - **Read:** Fetched on component mount in `AllPosts`, `PostDetails`, `Profile`, and `CommentSection` using `post-service.ts`, `comment-service.ts` and `auth-service.ts`.
 - **Update:** Post authors edit records via `EditPost.tsx` (`postService.update()`). Upon success, the user is navigated back to the updated `/posts/:postId` view.
-- **Delete:** Authors trigger deletion on `PostDetails` component. Post deletion redirects to `/`.
+- **Delete:** Post authors trigger deletion on `PostDetails` component. Post deletion redirects to `/`.
 
 ## 8. Forms & Validation
 
@@ -132,7 +132,7 @@ Component styling is maintained through **CSS Modules** (`*.module.css`) combine
 ## 10. Typical User Flow
 
 1. **Register / Log In:** A guest visits the site, navigates to `/auth/signup` or `/auth/login`, and authenticates.
-2. **Browse Feed:** Redirected to `/`, the user scrolls through recent community posts.
+2. **Browse Feed:** Redirected to `/posts`, the user scrolls through recent community posts.
 3. **Engage:** The user clicks a post to view `/posts/:postId` and submits a comment via `AddComment`.
 4. **Publish & Manage:** The user creates a new post at `/posts/create`, views it on their own profile (`/:username`), and edits or deletes it as needed.
 
@@ -141,20 +141,3 @@ Component styling is maintained through **CSS Modules** (`*.module.css`) combine
 - **Authentication Errors:** Invalid login/signup credentials trigger user-friendly alerts. Unauthorized route attempts trigger route guard redirects.
 - **Network / Data Errors:** `try/catch` blocks around service calls capture API errors and display user-friendly error alerts.
 - **Empty / Missing States:** Displays fallback messages when a feed, profile, or comment section has no items, or when a requested post ID does not exist.
-
----
-
-## 🚀 Quick Start (Local Setup)
-
-```bash
-# 1. Install dependencies
-npm install
-
-# 2. Configure environment variables (.env)
-SUPABASE_PROJECT_ID="your-project-id"
-VITE_SUPABASE_URL="https://your-project-id.supabase.co"
-VITE_SUPABASE_KEY="your-publishable-key"
-
-# 3. Run development server
-npm run dev
-```
