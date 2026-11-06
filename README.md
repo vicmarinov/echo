@@ -15,10 +15,7 @@ A fully functional, **deployed version** of the app is available at [**echo.vicm
 
 A deeper description of the application's user access, authentication, routing, data operations, forms and validation, and the React techniques used is provided in the [**Functional Guide**](./docs/functional-guide.md).
 
-<div style="display: flex">
-    <img style="flex: calc(1582px / 3090px); min-width: 0" src="./docs/screenshots/all-posts-mobile.png" alt="Posts feed on mobile" />
-    <img style="flex: calc(3046px / 2122px); min-width: 0" src="./docs/screenshots/post-details.png"     alt="Post details"         />
-</div>
+![Posts feed on mobile and post details](./docs/screenshots/all-posts-mobile-and-post-details.png)
 
 ## 🛠️ Technologies & Tools Used
 
